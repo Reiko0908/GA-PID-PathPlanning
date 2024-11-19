@@ -10,12 +10,17 @@ class Map:
     def __init__(self):
         self.obstacles = [Obstacle() for _ in range(NUM_OBSTACLES)]
 
-    def randomize(self):
+    def create_obstacles(self):
         [obstacle.randomize() for obstacle in self.obstacles]
 
     def draw(self, screen):
         [obstacle.draw(screen) for obstacle in self.obstacles]
+        pygame.draw.circle(screen, MAP_END_POINTS_COLOR, START_POSITION, 10)
+        pygame.draw.circle(screen, MAP_END_POINTS_COLOR, END_POSITION, 10)
 
+    def generate_danger_map(self):
+        return
+    
 
 if __name__ == "__main__":
     pygame.init()
@@ -24,13 +29,13 @@ if __name__ == "__main__":
     clock = pygame.time.Clock()
 
     car = Car("car.png")
-    bezier_path = Bezier()
     map = Map()
+    model = Genetic_model()
 
-    bezier_path.randomize()
-    car.randomize()
-    map.randomize()
+    map.create_obstacles()
+    model.generate_initial_chromosomes()
 
+    print('Starting Simulation')
     while True:
         clock.tick(SCREEN_FPS)
         screen.fill("gray")
@@ -43,7 +48,6 @@ if __name__ == "__main__":
         car.update(keys)
 
         # Draw
-        bezier_path.draw(screen)
         map.draw(screen)
         car.draw(screen)
 

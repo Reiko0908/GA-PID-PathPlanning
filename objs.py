@@ -4,7 +4,10 @@ import math
 
 from macros import *
 
-CAR_CORLOR = (255, 0, 0)
+MAP_END_POINTS_COLOR = (255, 0, 0)
+START_POSITION = [10, 10]
+END_POSITION = [SCREEN_WIDTH - 10, SCREEN_HEIGHT - 10]
+
 CAR_VELOCITY = 150
 CAR_ANGULAR_VELOCITY = 2*np.pi/150
 
@@ -28,13 +31,9 @@ def rotate_vect(vector, angle_radian):
 class Car:
     def __init__(self, image_path):
         image = pygame.image.load(image_path)
-        self.img = pygame.transform.scale_by(image,0.2)
+        self.img = pygame.transform.scale_by(image, 0.15)
         self.heading = np.array([0, -1])
-        self.position = np.array([])
-
-    def randomize(self):
-        self.position = np.random.randint([0, 0], [SCREEN_WIDTH, SCREEN_HEIGHT])
-        self.heading = rotate_vect(np.array([1, 0]), np.random.rand() * 2* np.pi)
+        self.position = np.array(START_POSITION)
 
     def update(self, key):
         if key[pygame.K_d]:
@@ -85,6 +84,8 @@ class Bezier:
                 local_point = local_point + math.comb(BEZIER_ORDER, i) * t**i * (1-t)**(BEZIER_ORDER-i) * self.control_points[i]
             pygame.draw.circle(screen, BEZIER_LOCAL_POINT_COLOR, local_point.tolist(), 5)
 
+# -------------------------------------------------------------------------------------------------------
+
 class Obstacle:
     def __init__(self):
         self.position = np.array([])
@@ -101,14 +102,45 @@ class Obstacle:
 PATH_LENGTH_PRIORITIZE_FACTOR = 0.8
 PATH_SAFETY_PRIORITIZE_FACTOR = 1 - PATH_LENGTH_PRIORITIZE_FACTOR
 
+CHROMOSOME_SELECTION_RATIO = 0.7
+POPULATION = 50
+
 def measure_bezier_length(bezier):
     return
 def measure_bezier_danger(bezier):
     return
 
+
+def chromosome_to_bezier(chromosome):
+    return
+
 class Genetic_model:
     def __init__(self):
-        self.chromosomes = np.array([])
+        print("Initializing Model")
+        self.chromosomes = []
+        self.start_gene = START_POSITION[0] * SCREEN_HEIGHT + START_POSITION[1] # index in chormosome that indicates car start position
+        self.end_gene = END_POSITION[0] * SCREEN_HEIGHT + END_POSITION[1] # index in chormosome that indicates car end position
+
+    def generate_initial_chromosomes(self):
+        print("Generating Intial Chromosomes")
+        for _ in range(POPULATION):
+            chromosome = np.zeros(SCREEN_HEIGHT * SCREEN_WIDTH).tolist()
+            chromosome[self.start_gene] = 1
+            chromosome[self.end_gene] = 1
+
+            num_control_points = BEZIER_ORDER + 1
+            while(True): # Loop forever until the random genes dont match start and end genes
+                control_genes = np.random.randint(SCREEN_HEIGHT * SCREEN_WIDTH, size = num_control_points - 2).tolist()
+                if self.start_gene not in control_genes and self.end_gene not in control_genes:
+                    break
+            
+            for gene in control_genes:
+                chromosome[gene] = 1
+
+            self.chromosomes.append(chromosome)
+
+
+    def validate(self):
         return
 
     def fitness_function(self, chromosome):
