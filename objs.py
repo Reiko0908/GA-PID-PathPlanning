@@ -121,7 +121,7 @@ class Genetic_model:
         self.start_gene = START_POSITION[0] * SCREEN_HEIGHT + START_POSITION[1] # index in chormosome that indicates car start position
         self.end_gene = END_POSITION[0] * SCREEN_HEIGHT + END_POSITION[1] # index in chormosome that indicates car end position
 
-    def generate_initial_chromosomes(self):
+    def generate_initial_population(self):
         print("Generating Intial Chromosomes")
         for _ in range(POPULATION):
             chromosome = np.zeros(SCREEN_HEIGHT * SCREEN_WIDTH).tolist()
