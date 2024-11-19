@@ -5,23 +5,17 @@ import sys
 from macros import *
 from objs import *
 
-NUM_OBSTACLES = 20
-MAX_OBSTACLE_SIZE = 100
-MIN_OBSTACLE_SIZE = 20
-OBSTACLE_COLOR = (150, 150, 150)
 
-class Obstacle:
+class Map:
     def __init__(self):
-        self.position = np.array([])
-        self.radius = np.array([])
+        self.obstacles = [Obstacle() for _ in range(NUM_OBSTACLES)]
 
     def randomize(self):
-        self.position = np.random.randint([0, 0], [SCREEN_WIDTH, SCREEN_HEIGHT])
-        self.radius = np.random.randint(MIN_OBSTACLE_SIZE, MAX_OBSTACLE_SIZE)
+        [obstacle.randomize() for obstacle in self.obstacles]
 
     def draw(self, screen):
-        pygame.draw.circle(screen, OBSTACLE_COLOR, self.position.tolist(), self.radius)
-    
+        [obstacle.draw(screen) for obstacle in self.obstacles]
+
 
 if __name__ == "__main__":
     pygame.init()
@@ -29,18 +23,13 @@ if __name__ == "__main__":
     pygame.display.set_caption('Path planning and Trajectory Tracking using Bezier Curve, Genetic Algorithm, Artificial Potential Field and PID Control')
     clock = pygame.time.Clock()
 
-    car = Car()
+    car = Car("car.png")
     bezier_path = Bezier()
-    obstacles = [Obstacle() for i in range(NUM_OBSTACLES)]
+    map = Map()
 
     bezier_path.randomize()
     car.randomize()
-    [obs.randomize() for obs in obstacles]
-
-    robot_img = pygame.image.load("robot.png")
-    robot_img.convert()
-    robot = robot_img.get_rect()
-    print(robot.center)
+    map.randomize()
 
     while True:
         clock.tick(SCREEN_FPS)
@@ -55,7 +44,7 @@ if __name__ == "__main__":
 
         # Draw
         bezier_path.draw(screen)
-        [obs.draw(screen) for obs in obstacles]
+        map.draw(screen)
         car.draw(screen)
 
         pygame.display.flip()
