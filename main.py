@@ -33,7 +33,7 @@ if __name__ == "__main__":
     model = Genetic_model()
 
     map.create_obstacles()
-    model.generate_initial_chromosomes()
+    model.generate_initial_population()
 
     print('Starting Simulation')
     while True:
