@@ -102,7 +102,8 @@ class Obstacle:
 PATH_LENGTH_PRIORITIZE_FACTOR = 0.8
 PATH_SAFETY_PRIORITIZE_FACTOR = 1 - PATH_LENGTH_PRIORITIZE_FACTOR
 
-CHROMOSOME_SELECTION_RATIO = 0.7
+CHROMOSOME_CROSSOVER_SELECTION_RATIO = 0.8
+ELITISM_RATIO = 0.1
 POPULATION = 50
 
 def measure_bezier_length(bezier):
@@ -138,8 +139,47 @@ class Genetic_model:
                 chromosome[gene] = 1
 
             self.chromosomes.append(chromosome)
+    def select_elites(self, fitness_scores):
+        num_elites = int(len(self.chromosomes) * ELITISM_RATIO)
+        sorted_indices = np.argsort(fitness_scores)  
+        elite_indices = sorted_indices[:num_elites]
+        elites = [self.chromosomes[i] for i in elite_indices]
+        return elite_indices, elites
 
+    def crossover(self):
+        print("Performing Crossover")
+        elite_indices, elites = self.select_elites(fitness_scores)
+        non_elite_indices = np.setdiff1d(np.arange(len(self.chromosomes)), elite_indices)
 
+        num_crossover = int(len(non_elite_indices)*CHROMOSOME_CROSSOVER_SELECTION_RATIO)
+        selected_indices = np.random.choice(
+                len(non_elite_indices), num_crossover, replace=False
+        )
+        selected_chromosomes = [self.chromosomes[i] for i in selected_indices]
+        np.random.shuffle(selected_chromosomes)
+        
+        new_chromosomes = []
+        for i in range (0, len(selected_chromosomes) -1, 2):
+            parent1 = selected_chromosomes[i]
+            parent2 = selected_chromosomes[i+1]
+
+            points = np.random.choice(
+                    range(SCREEN_HEIGHT * SCREEN_WIDTH),2, replace=False
+            )
+            point1, point2 = sorted(points)
+
+            child1 = parent1[:point1] + parent2[point1:point2] + parent1[point2:]
+            child2 = parent2[:point1] + parent1[point1:point2] + parent2[point2:]
+            
+            child1[self.start_gene] = 1
+            child1[self.end_gene] = 1
+            child2[self.start_gene] = 1
+            child2[self.end_gene] = 1
+
+            new_chromosomes.extend([child1, child2])
+
+            num_replacement = len(self.chromosomes) - len(elites)
+            self.chromosomes = elites + new_chromosomes[:num_replacement]
     def validate(self):
         return
 
