@@ -119,20 +119,18 @@ def measure_bezier_length(chromosome):
         total_length += np.linalg.norm(p2 - p1)
     
     return total_length
-def measure_bezier_danger(bezier):
-    return
-
 
 def chromosome_to_bezier(chromosome):
     return
 
 class Genetic_model:
-    def __init__(self):
+    def __init__(self,map_obj):
         print("Initializing Model")
         self.chromosomes = []
         self.start_gene = START_POSITION[0] * SCREEN_HEIGHT + START_POSITION[1] # index in chormosome that indicates car start position
         self.end_gene = END_POSITION[0] * SCREEN_HEIGHT + END_POSITION[1] # index in chormosome that indicates car end position
         self.chromosome_length = SCREEN_HEIGHT * SCREEN_WIDTH # length of each chromosome
+        self.map = map_obj  # Map object containing the danger map
 
     def generate_initial_population(self):
         print("Generating Intial Chromosomes")
@@ -176,7 +174,7 @@ class Genetic_model:
             parent2 = selected_chromosomes[i+1]
 
             points = np.random.choice(
-                    self.chromosome_length,2, replace=False
+                range(1, self.chromosome_length - 1),2, replace=False
             )
             point1, point2 = sorted(points)
 
@@ -210,12 +208,24 @@ class Genetic_model:
             chromosome = self.chromosomes[idx]
             num_gene_mutate = int(self.chromosome_length * gene_mutate_ratio)
             selected_genes_indices = np.random.choice(
-                    self.chromosome_length, num_gene_mutate, replace=False
+                    range(1, self.chromosome_length - 1), num_gene_mutate, replace=False
         )
             for gene_idx in selected_genes_indices:
                 chromosome[gene_idx] = 1 - chromosome[gene_idx]
 
                 self.chromosomes[idx] = chromosome
+    def measure_bezier_danger(self, chromosome):
+        danger_map = self.map.danger_map
+        active_genes = [i for i, gene in enumerate(chromosome) if gene == 1]
+        if len(active_genes) <= 2:
+            return 0
+        active_genes = active_genes[1:-1]
+        total_danger = sum(
+                danger_map[i // SCREEN_WIDTH, i % SCREEN_WIDTH] for i in active_genes
+        )
+        average_danger = total_danger / len(active_genes)
+        return average_danger
+
 
     def validate(self):
         return
