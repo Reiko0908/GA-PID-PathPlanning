@@ -5,10 +5,10 @@ import sys
 from macros import *
 from objs import *
 
-
 class Map:
     def __init__(self):
         self.obstacles = [Obstacle() for _ in range(NUM_OBSTACLES)]
+        self.danger_map = None  
 
     def create_obstacles(self):
         [obstacle.randomize() for obstacle in self.obstacles]
@@ -19,8 +19,25 @@ class Map:
         pygame.draw.circle(screen, MAP_END_POINTS_COLOR, END_POSITION, 10)
 
     def generate_danger_map(self):
-        return
-    
+        self.danger_map = np.zeros((SCREEN_HEIGHT, SCREEN_WIDTH))
+
+        for y in range(SCREEN_HEIGHT):
+            for x in range(SCREEN_WIDTH):
+                danger = 0
+                for obstacle in self.obstacles:
+                    ox, oy = obstacle.position
+                    radius = obstacle.radius
+                    outer_limit = obstacle.radius * 2.5
+
+                    dist = np.sqrt((x - ox) ** 2 + (y - oy) ** 2)
+                    if dist <= radius:
+                        danger = 1
+                        break
+                    elif dist <= outer_limit:
+                        danger += 1 - (np.log10(dist - radius) / np.log10(outer_limit - radius))
+                self.danger_map[y, x] = min(danger, 1)
+
+        return self.danger_map 
 
 if __name__ == "__main__":
     pygame.init()
@@ -34,7 +51,9 @@ if __name__ == "__main__":
 
     map.create_obstacles()
     model.generate_initial_population()
-
+#    model.select_elites()
+#    model.crossover()
+    
     print('Starting Simulation')
     while True:
         clock.tick(SCREEN_FPS)
