@@ -103,11 +103,22 @@ PATH_LENGTH_PRIORITIZE_FACTOR = 0.8
 PATH_SAFETY_PRIORITIZE_FACTOR = 1 - PATH_LENGTH_PRIORITIZE_FACTOR
 
 CHROMOSOME_CROSSOVER_SELECTION_RATIO = 0.8
-ELITISM_RATIO = 0.1
+ELITISM_RATIO = 0.04
 POPULATION = 50
 
-def measure_bezier_length(bezier):
-    return
+def measure_bezier_length(chromosome):
+    sampled_points = np.argwhere(chromosome == 1)
+    
+    if len(sampled_points) < 2:
+        return 0.0  # If less than 2 points, length is 0
+    
+    # Compute the total length by summing distances between consecutive sampled points
+    total_length = 0.0
+    for i in range(1, len(sampled_points)):
+        p1, p2 = sampled_points[i - 1], sampled_points[i]
+        total_length += np.linalg.norm(p2 - p1)
+    
+    return total_length
 def measure_bezier_danger(bezier):
     return
 
@@ -121,6 +132,7 @@ class Genetic_model:
         self.chromosomes = []
         self.start_gene = START_POSITION[0] * SCREEN_HEIGHT + START_POSITION[1] # index in chormosome that indicates car start position
         self.end_gene = END_POSITION[0] * SCREEN_HEIGHT + END_POSITION[1] # index in chormosome that indicates car end position
+        self.chromosome_length = SCREEN_HEIGHT * SCREEN_WIDTH # length of each chromosome
 
     def generate_initial_population(self):
         print("Generating Intial Chromosomes")
@@ -164,7 +176,7 @@ class Genetic_model:
             parent2 = selected_chromosomes[i+1]
 
             points = np.random.choice(
-                    range(SCREEN_HEIGHT * SCREEN_WIDTH),2, replace=False
+                    self.chromosome_length,2, replace=False
             )
             point1, point2 = sorted(points)
 
@@ -180,11 +192,36 @@ class Genetic_model:
 
             num_replacement = len(self.chromosomes) - len(elites)
             self.chromosomes = elites + new_chromosomes[:num_replacement]
+
+    def mutation(self):
+        generation_mutate_ratio = np.random.random()
+        chromosome_mutate_ratio = np.random.uniform(0.1, 0.5)
+        gene_mutate_ratio = np.random.uniform(0.02,0.3)
+
+        if generation_mutate_ratio < chromosome_mutate_ratio:
+            print("Mutation skipped for this generation.")
+            return
+        print("Performing mutation for this generation.")
+        num_chromosome_mutate = int(len(self.chromosomes) * chromosome_mutate_ratio)
+        selected_chromosomes_indices = np.random.choice(
+                len(self.chromosomes), num_chromosome_mutate, replace=False
+        )
+        for idx in selected_chromosomes_indices: 
+            chromosome = self.chromosomes[idx]
+            num_gene_mutate = int(self.chromosome_length * gene_mutate_ratio)
+            selected_genes_indices = np.random.choice(
+                    self.chromosome_length, num_gene_mutate, replace=False
+        )
+            for gene_idx in selected_genes_indices:
+                chromosome[gene_idx] = 1 - chromosome[gene_idx]
+
+                self.chromosomes[idx] = chromosome
+
     def validate(self):
         return
 
     def fitness_function(self, chromosome):
-        return
+        return 
 
     def evaluate_population(self):
         return
