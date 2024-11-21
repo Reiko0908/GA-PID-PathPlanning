@@ -1,6 +1,8 @@
 import numpy as np
 import pygame
 import sys
+import json
+import os
 
 from macros import *
 from objs import *
@@ -37,7 +39,39 @@ class Map:
                         danger += 1 - (np.log10(dist - radius) / np.log10(outer_limit - radius))
                 self.danger_map[y, x] = min(danger, 1)
 
-        return self.danger_map 
+        return self.danger_map
+    def save_terrain(self, file_name):
+        with open(file_name, 'w') as file:
+            file.write(f"obstacles {len(self.obstacles)}\n")
+            for obstacle in self.obstacles:
+                x, y = obstacle.position
+                r = obstacle.radius
+                file.write(f"{x} {y} {r}\n")
+            print(f"Terrain saved to {file_name}")    
+    def load_terrain(self, file_name):
+        if not os.path.exists(file_name):
+            print(f"{file_name} does not exist. Please ensure the file is available.")
+            return
+
+        with open(file_name, 'r') as file:
+            while True:
+                line = file.readline().strip()
+                if not line:  
+                    break
+                if "obstacles" in line:
+                    _, num_obstacles = line.split()
+                    num_obstacles = int(num_obstacles)
+                    self.obstacles = []  
+                    
+                    for _ in range(num_obstacles):
+                        line = file.readline().strip()
+                        if line:  
+                            x, y, r = [float(value) for value in line.split()]
+                            self.obstacles.append(
+                                    Obstacle(position=np.array([x, y]), radius=r)
+                            )                    
+
+            print(f"Terrain loaded from {file_name}")
 
 if __name__ == "__main__":
     pygame.init()
@@ -47,9 +81,15 @@ if __name__ == "__main__":
 
     car = Car("car.png")
     map = Map()
-    model = Genetic_model()
-
     map.create_obstacles()
+    map.save_terrain("terrain.txt")
+    map.load_terrain("terrain.txt")
+    
+    for obstacle in map.obstacles:
+        print(f"Position: {obstacle.position}, Radius: {obstacle.radius}")
+
+    model = Genetic_model(map)
+
     model.generate_initial_population()
 #    model.select_elites()
 #    model.crossover()
