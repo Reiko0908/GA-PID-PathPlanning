@@ -87,9 +87,9 @@ class Bezier:
 # -------------------------------------------------------------------------------------------------------
 
 class Obstacle:
-    def __init__(self):
-        self.position = np.array([])
-        self.radius = np.array([])
+    def __init__(self, position=None, radius=None):
+        self.position = np.array(position) if position is not None else np.array([0, 0])
+        self.radius = radius if radius is not None else 0
 
     def randomize(self):
         self.position = np.random.randint([0, 0], [SCREEN_WIDTH, SCREEN_HEIGHT])
@@ -110,9 +110,8 @@ def measure_bezier_length(chromosome):
     sampled_points = np.argwhere(chromosome == 1)
     
     if len(sampled_points) < 2:
-        return 0.0  # If less than 2 points, length is 0
+        return 0.0
     
-    # Compute the total length by summing distances between consecutive sampled points
     total_length = 0.0
     for i in range(1, len(sampled_points)):
         p1, p2 = sampled_points[i - 1], sampled_points[i]
