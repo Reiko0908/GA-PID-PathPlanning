@@ -8,7 +8,7 @@ MAP_END_POINTS_COLOR = (255, 0, 0)
 START_POSITION = [10, 10]
 END_POSITION = [SCREEN_WIDTH - 10, SCREEN_HEIGHT - 10]
 
-CAR_VELOCITY = 150
+CAR_VELOCITY = 200
 CAR_ANGULAR_VELOCITY = 2*np.pi/150
 
 BEZIER_ORDER = 3
@@ -73,6 +73,16 @@ class Bezier:
     def update(self):
         return
 
+    def chromosome_to_bezier(self, chromosome):
+        sampled_indices = np.argwhere(chromosome == 1)
+        if len(sampled_indices) != BEZIER_ORDER + 1:
+            raise ValueError(f"Chromosome must encode exactly {BEZIER_ORDER + 1} control points.")
+
+        self.control_points = np.array([
+            [index % SCREEN_WIDTH, index // SCREEN_WIDTH]
+            for index in sampled_indices.flatten()
+        ])
+
     def draw(self, screen):
         for point in self.control_points:
             pygame.draw.circle(screen, BEZIER_CONTROL_POINT_COLOR, point.tolist(), 10)
@@ -83,7 +93,15 @@ class Bezier:
             for i in range(BEZIER_ORDER + 1):
                 local_point = local_point + math.comb(BEZIER_ORDER, i) * t**i * (1-t)**(BEZIER_ORDER-i) * self.control_points[i]
             pygame.draw.circle(screen, BEZIER_LOCAL_POINT_COLOR, local_point.tolist(), 5)
-
+    def bezier_first_derivative(self, t):
+        n = len(self.control_points) - 1  # Degree of the Bézier curve
+        derivative = np.zeros(2)
+        for i in range(n):
+            coefficient = n * math.comb(n - 1, i)
+            term = coefficient * (self.control_points[i + 1] - self.control_points[i])
+            term *= t**i * (1 - t)**(n - 1 - i)
+            derivative += term
+            return derivative
 # -------------------------------------------------------------------------------------------------------
 
 class Obstacle:
@@ -99,28 +117,13 @@ class Obstacle:
         pygame.draw.circle(screen, OBSTACLE_COLOR, self.position.tolist(), self.radius)
 
 # -------------------------------------------------------------------------------------------------------
-PATH_LENGTH_PRIORITIZE_FACTOR = 0.8
-PATH_SAFETY_PRIORITIZE_FACTOR = 1 - PATH_LENGTH_PRIORITIZE_FACTOR
+PATH_SAFETY_PRIORITIZE_FACTOR = 0.6
+PATH_LENGTH_PRIORITIZE_FACTOR = 0.3
+PATH_SMOOTHNESS_PRIORITIZE_FACTOR = 0.1
 
 CHROMOSOME_CROSSOVER_SELECTION_RATIO = 0.8
 ELITISM_RATIO = 0.04
 POPULATION = 50
-
-def measure_bezier_length(chromosome):
-    sampled_points = np.argwhere(chromosome == 1)
-    
-    if len(sampled_points) < 2:
-        return 0.0
-    
-    total_length = 0.0
-    for i in range(1, len(sampled_points)):
-        p1, p2 = sampled_points[i - 1], sampled_points[i]
-        total_length += np.linalg.norm(p2 - p1)
-    
-    return total_length
-
-def chromosome_to_bezier(chromosome):
-    return
 
 class Genetic_model:
     def __init__(self,map_obj):
@@ -148,6 +151,82 @@ class Genetic_model:
                 chromosome[gene] = 1
 
             self.chromosomes.append(chromosome)
+    def chromosome_to_bezier(self, chromosome):
+        bezier = Bezier()
+        bezier.chromosome_to_bezier(chromosome) 
+        return bezier
+
+    def measure_bezier_length(self, bezier_curve):
+        if len(bezier_curve.control_points) < 2:
+            return 0.0
+
+        t_values = np.linspace(0, 1, BEZIER_RESOLUTION)
+        total_length = 0.0
+
+        for i in range(len(t_values) - 1):
+            t1, t2 = t_values[i], t_values[i + 1]
+            p1 = bezier_curve.bezier_first_derivative(t1)
+            p2 = bezier_curve.bezier_first_derivative(t2)
+
+            # Approximate integral using the trapezoidal rule
+            avg_magnitude = (np.linalg.norm(p1) + np.linalg.norm(p2)) / 2
+            total_length += avg_magnitude * (t2 - t1)
+        return total_length    
+
+    def measure_bezier_danger(self, chromosome):
+        danger_map = self.map.danger_map
+        active_genes = [i for i, gene in enumerate(chromosome) if gene == 1]
+        if len(active_genes) <= 2:
+            return 0
+        active_genes = active_genes[1:-1]
+        total_danger = sum(
+                danger_map[i // SCREEN_WIDTH, i % SCREEN_WIDTH] for i in active_genes
+        )
+        average_danger = total_danger / len(active_genes)
+        return average_danger
+
+
+    def calculate_bezier_smoothness(self, bezier):
+        bezier_points = bezier.sample_points()
+        smoothness = 0
+        for i in range(1, len(bezier_points) - 1):
+            p1, p2, p3 = bezier_points[i - 1], bezier_points[i], bezier_points[i + 1]
+            vec1 = p2 - p1
+            vec2 = p3 - p2
+            angle = np.arccos(
+                np.clip(np.dot(vec1, vec2) / (np.linalg.norm(vec1) * np.linalg.norm(vec2)), -1, 1)
+            )
+            smoothness += angle
+        return smoothness
+
+    def fitness_function(self, chromosome):
+        bezier = self.chromosome_to_bezier(chromosome)
+        # Measure path length
+        path_length = self.measure_bezier_length(chromosome)
+
+        # Measure danger
+        path_danger = self.measure_bezier_danger(chromosome)
+        # Measure smoothness
+        path_smoothness = self.calculate_bezier_smoothness(bezier)
+        # Combine metrics into the fitness score
+        length_factor = PATH_LENGTH_PRIORITIZE_FACTOR
+        danger_factor = PATH_SAFETY_PRIORITIZE_FACTOR
+        smoothness_factor = PATH_SMOOTHNESS_PRIORITIZE_FACTOR  # Adjust weight for smoothness as needed
+
+        fitness = (
+            length_factor * path_length +
+            danger_factor * path_danger +
+            smoothness_factor * path_smoothness
+        )
+        return fitness
+
+    def evaluate_population(self):
+        """
+        Evaluate the fitness of the entire population.
+        """
+        fitness_scores = [self.fitness_function(chromosome) for chromosome in self.chromosomes]
+        return fitness_scores
+
     def select_elites(self, fitness_scores):
         num_elites = int(len(self.chromosomes) * ELITISM_RATIO)
         sorted_indices = np.argsort(fitness_scores)  
@@ -157,8 +236,9 @@ class Genetic_model:
 
     def crossover(self):
         print("Performing Crossover")
+        fitness_scores = self.evaluate_population()
         elite_indices, elites = self.select_elites(fitness_scores)
-        non_elite_indices = np.setdiff1d(np.arange(len(self.chromosomes)), elite_indices)
+        non_elite_indices = np.setdiff1d(np.arange(len(self.chromosomes)), elite_indices)        
 
         num_crossover = int(len(non_elite_indices)*CHROMOSOME_CROSSOVER_SELECTION_RATIO)
         selected_indices = np.random.choice(
@@ -213,24 +293,6 @@ class Genetic_model:
                 chromosome[gene_idx] = 1 - chromosome[gene_idx]
 
                 self.chromosomes[idx] = chromosome
-    def measure_bezier_danger(self, chromosome):
-        danger_map = self.map.danger_map
-        active_genes = [i for i, gene in enumerate(chromosome) if gene == 1]
-        if len(active_genes) <= 2:
-            return 0
-        active_genes = active_genes[1:-1]
-        total_danger = sum(
-                danger_map[i // SCREEN_WIDTH, i % SCREEN_WIDTH] for i in active_genes
-        )
-        average_danger = total_danger / len(active_genes)
-        return average_danger
-
 
     def validate(self):
-        return
-
-    def fitness_function(self, chromosome):
-        return 
-
-    def evaluate_population(self):
         return

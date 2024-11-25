@@ -1,8 +1,9 @@
 import numpy as np
 import pygame
 import sys
-import json
 import os
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 from macros import *
 from objs import *
@@ -29,17 +30,18 @@ class Map:
                 for obstacle in self.obstacles:
                     ox, oy = obstacle.position
                     radius = obstacle.radius
-                    outer_limit = obstacle.radius * 2.5
+                    outer_limit = obstacle.radius + 100
 
                     dist = np.sqrt((x - ox) ** 2 + (y - oy) ** 2)
                     if dist <= radius:
                         danger = 1
-                        break
+                        break 
                     elif dist <= outer_limit:
                         danger += 1 - (np.log10(dist - radius) / np.log10(outer_limit - radius))
                 self.danger_map[y, x] = min(danger, 1)
 
         return self.danger_map
+   
     def save_terrain(self, file_name):
         with open(file_name, 'w') as file:
             file.write(f"obstacles {len(self.obstacles)}\n")
@@ -85,15 +87,38 @@ if __name__ == "__main__":
     map.save_terrain("terrain.txt")
     map.load_terrain("terrain.txt")
     
-    for obstacle in map.obstacles:
-        print(f"Position: {obstacle.position}, Radius: {obstacle.radius}")
+    map.generate_danger_map()
+    danger_map = map.danger_map
+    fig = plt.figure(figsize=(10, 8))
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Generate coordinate grid
+    x = np.linspace(0, SCREEN_WIDTH, SCREEN_WIDTH)
+    y = np.linspace(0, SCREEN_HEIGHT, SCREEN_HEIGHT)
+    x, y = np.meshgrid(x, y)
+
+    # Plotting the surface
+    surf = ax.plot_surface(x, y, danger_map, cmap='hot', edgecolor='none')
+
+    # Adding color bar
+    fig.colorbar(surf, ax=ax, label='Danger Level')
+
+    # Set labels and title
+    ax.set_title("3D Danger Map")
+    ax.set_xlabel('Width (X)')
+    ax.set_ylabel('Height (Y)')
+    ax.set_zlabel('Danger Level')
+
+    # Show the plot
+    plt.show()    
 
     model = Genetic_model(map)
 
+    for obstacle in map.obstacles:
+        print(f"Position: {obstacle.position}, Radius: {obstacle.radius}")
     model.generate_initial_population()
 #    model.select_elites()
-#    model.crossover()
-    
+#    model.crossover()    
     print('Starting Simulation')
     while True:
         clock.tick(SCREEN_FPS)
