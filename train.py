@@ -59,8 +59,4 @@ if __name__ == "__main__":
     model.generate_initial_population()
     print(model.evaluate_population(map))
 
-    # test_bezier = Bezier()
-    # test_bezier.randomize()
-    # plot_bezier_with_terrain(map, test_bezier)
-
 

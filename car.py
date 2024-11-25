@@ -1,3 +1,4 @@
+
 import numpy as np
 import pygame
 import math
@@ -32,7 +33,7 @@ class Car:
             self.position = self.position - CAR_VELOCITY * self.heading / SCREEN_FPS
         return
 
-    def draw(self, screen):
+    def game_draw(self, screen):
         self.heading = self.heading /np.linalg.norm(self.heading)
         north = np.array([0, -1])
         angle = np.rad2deg(np.arccos(north @ self.heading))
