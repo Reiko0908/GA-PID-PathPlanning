@@ -5,7 +5,6 @@ import math
 
 from macros import *
 
-BEZIER_ORDER = 3
 BEZIER_RESOLUTION = 50
 BEZIER_LOCAL_POINT_COLOR = (0, 0, 255)
 BEZIER_CONTROL_POINT_COLOR = (0, 0, 255)
@@ -56,8 +55,8 @@ class Bezier:
     def __init__(self):
         self.control_points = np.array([])
     
-    def randomize(self):
-        self.control_points = np.random.rand(BEZIER_ORDER + 1, 2)
+    def randomize(self, order):
+        self.control_points = np.random.rand(order + 1, 2)
         self.control_points[:, 0] = self.control_points[:, 0] * SCREEN_WIDTH
         self.control_points[:, 1] = self.control_points[:, 1] * SCREEN_HEIGHT
         return
@@ -70,18 +69,20 @@ class Bezier:
             pygame.draw.circle(screen, BEZIER_CONTROL_POINT_COLOR, point.tolist(), 10)
 
         t_values = np.linspace(0, 1, BEZIER_RESOLUTION)
+        bezier_order = len(self.control_points) - 1
         for t in t_values:
             local_point = np.array([0, 0])
-            for i in range(BEZIER_ORDER + 1):
-                local_point = local_point + math.comb(BEZIER_ORDER, i) * t**i * (1-t)**(BEZIER_ORDER-i) * self.control_points[i]
+            for i in range(bezier_order + 1):
+                local_point = local_point + math.comb(bezier_order, i) * t**i * (1-t)**(bezier_order-i) * self.control_points[i]
             pygame.draw.circle(screen, BEZIER_LOCAL_POINT_COLOR, local_point.tolist(), 5)
 
     def first_derivative(self, t):
         derivative = np.zeros(2)
-        for i in range(BEZIER_ORDER):
-            coefficient = BEZIER_ORDER * math.comb(BEZIER_ORDER - 1, i)
+        bezier_order = len(self.control_points) - 1
+        for i in range(bezier_order):
+            coefficient = bezier_order * math.comb(bezier_order - 1, i)
             term = coefficient * (self.control_points[i + 1] - self.control_points[i])
-            term = term * t**i * (1 - t)**(BEZIER_ORDER - 1 - i)
+            term = term * t**i * (1 - t)**(bezier_order - 1 - i)
             derivative += term
             return derivative
 

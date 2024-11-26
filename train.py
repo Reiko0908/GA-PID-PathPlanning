@@ -25,33 +25,25 @@ def plot_bezier(bezier):
     local_points = np.zeros((BEZIER_RESOLUTION, 2))
     bezier_local_point_color = (BEZIER_LOCAL_POINT_COLOR[0]/255, BEZIER_LOCAL_POINT_COLOR[1]/255, BEZIER_LOCAL_POINT_COLOR[2]/255)
 
+    bezier_order = len(bezier.control_points.tolist()) - 1
     for i in range(BEZIER_RESOLUTION):
-        for j in range(BEZIER_ORDER + 1):
+        for j in range(bezier_order + 1):
             t = t_values[i]
-            temp = math.comb(BEZIER_ORDER, j) * t**j * (1-t)**(BEZIER_ORDER-j)
+            temp = math.comb(bezier_order, j) * t**j * (1-t)**(bezier_order-j)
             local_points[i] = local_points[i] + bezier.control_points[j] * temp
     
     plt.plot(local_points[:, 0], local_points[:, 1], color=bezier_local_point_color)
 
 if __name__ == "__main__":
-
     map = Map()
-    map.create_obstacles()
-    # map.save_terrain("terrain.txt")
     map.load_terrain("terrain.txt")
-    # map.generate_danger_map()
 
     model = Genetic_model()
     model.generate_initial_population()
 
-    test_bezier = Bezier()
-    test_bezier.randomize()
-    
-    # model.evaluate_population()
-
-    plot_terrain(map)
-    plot_bezier(test_bezier)
-
-    plt.show()
+    model.evaluate_population(map)
+    model.select_elites()
+    model.crossover()
+    model.mutate()
 
 
