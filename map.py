@@ -21,7 +21,7 @@ class Obstacle:
 class Map:
     def __init__(self):
         self.obstacles = [Obstacle() for _ in range(NUM_OBSTACLES)]
-        self.danger_map = None  
+        self.danger_map = np.zeros((SCREEN_HEIGHT, SCREEN_WIDTH))
 
     def create_obstacles(self):
         print("Create obstacles")
@@ -34,7 +34,6 @@ class Map:
 
     def generate_danger_map(self):
         print("Generating danger map")
-        self.danger_map = np.zeros((SCREEN_HEIGHT, SCREEN_WIDTH))
         for y in range(SCREEN_HEIGHT):
             for x in range(SCREEN_WIDTH):
                 danger = 0
@@ -85,3 +84,32 @@ class Map:
                             )                    
 
             print(f"Terrain loaded from {file_name}")
+    def save_danger_map(self, file_name):
+        with open(file_name, 'w') as file:
+            file.write(f"{SCREEN_WIDTH} {SCREEN_HEIGHT}\n") 
+            for y in range(SCREEN_HEIGHT):
+                for x in range(SCREEN_WIDTH):
+                    danger = self.danger_map[y, x]
+                    file.write(f"{x} {y} {danger:.5f}\n")
+        print(f"Danger map saved to {file_name}")
+
+    def load_danger_map(self, file_name):
+        if not os.path.exists(file_name):
+            print(f"{file_name} does not exist. Please ensure the file is available.")
+            return
+        
+        with open(file_name, 'r') as file:
+            dimensions = file.readline().strip().split()
+            width, height = map(int, dimensions)
+            if width != SCREEN_WIDTH or height != SCREEN_HEIGHT:
+                print("Error: Loaded danger map dimensions do not match the screen size.")
+                return
+            
+            self.danger_map = np.zeros((SCREEN_HEIGHT, SCREEN_WIDTH))
+            for line in file:
+                x, y, danger = line.strip().split()
+                x, y = int(x), int(y)
+                danger = float(danger)
+                self.danger_map[y, x] = danger
+        
+        print(f"Danger map loaded from {file_name}")

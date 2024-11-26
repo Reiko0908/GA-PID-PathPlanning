@@ -37,6 +37,7 @@ def plot_bezier(bezier):
 if __name__ == "__main__":
     map = Map()
     map.load_terrain("terrain.txt")
+    map.load_danger_map("danger_map.txt")
 
     model = Genetic_model()
     model.generate_initial_population()
