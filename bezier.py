@@ -27,7 +27,6 @@ BINARY_SEARCH_STOP_THRESHOLD = 1E-5
 
 def measure_bezier_danger(chromosome, map):
     danger_map = map.danger_map
-    print(danger_map)
     active_genes = [i for i, gene in enumerate(chromosome) if gene == 1]
     if len(active_genes) <= 2:
         return 0
@@ -107,7 +106,6 @@ class Bezier:
 
         projection_length = 0
         while(t_right - t_left > BINARY_SEARCH_STOP_THRESHOLD):
-            print(t)
             t1, t2 = (t + t_left) / 2, (t + t_right) / 2
             p1, p2 = self.calculate_local_point(t1), self.calculate_local_point(t2)
             norm1, norm2 = np.linalg.norm((p1 - target_point)), np.linalg.norm((p2 - target_point))
@@ -119,7 +117,7 @@ class Bezier:
                 t_left = t
                 t = t2
 
-        return projection_length, self.calculate_local_point(t)
+        return self.calculate_local_point(t), projection_length
 
 
     def get_length(self):

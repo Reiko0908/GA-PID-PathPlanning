@@ -3,6 +3,7 @@ import pygame
 import sys
 import os
 import matplotlib.pyplot as plt
+from matplotlib.patches import Circle
 from mpl_toolkits.mplot3d import Axes3D
 
 from macros import *
@@ -12,6 +13,9 @@ from genetic_model import *
 
 def plot_terrain(map):
     plt.figure(figsize=(SCREEN_WIDTH/100, SCREEN_HEIGHT/100))
+    plt.xlim(0, SCREEN_WIDTH)
+    plt.ylim(0, SCREEN_HEIGHT)
+
     obstacle_color = (OBSTACLE_COLOR[0]/255, OBSTACLE_COLOR[1]/255, OBSTACLE_COLOR[2]/255)
     for obs in map.obstacles:
         plt.scatter(obs.position[0], obs.position[1], s=obs.radius**2, color=obstacle_color)
@@ -41,23 +45,18 @@ if __name__ == "__main__":
     map.load_terrain("terrain.txt")
     # map.generate_danger_map()
     # map.save_danger_map("danger_map.txt")
-    # map.load_danger_map("danger_map.txt")
+    map.load_danger_map("danger_map.txt")
 
-    test_bezier = Bezier()
-    test_bezier.randomize(CHROMOSOME_INITIAL_LENGTH)
-    projection, _ = test_bezier.get_projection_of(map.obstacles[0].position)
+    model = Genetic_model()
+    model.generate_initial_population()
+    model.evaluate_population(map)
+    model.select_elites()
+    model.crossover()
+    model.mutate()
+    model.validate(map)
 
-    # model = Genetic_model()
-    # model.generate_initial_population()
-    # model.evaluate_population(map)
-    # model.select_elites()
-    # model.crossover()
-    # model.mutate()
-
-    print(projection)
+    print(len(model.chromosomes))
 
     plot_terrain(map)
-    plot_bezier(test_bezier)
-    plt.scatter(map.obstacles[0].position[0], map.obstacles[0].position[1])
-    plt.scatter(projection[0], projection[1])
+    plot_bezier(chromosome_to_bezier(model.chromosomes[0]))
     plt.show()

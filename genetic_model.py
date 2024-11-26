@@ -13,8 +13,8 @@ PATH_SMOOTHNESS_PRIORITIZE_FACTOR = 0.1
 CROSSOVER_RATIO = 0.5
 ELITISM_RATIO = 0.3
 MUTATION_RATIO = 0.1
-POPULATION = 100
-CHROMOSOME_INITIAL_LENGTH = 10
+POPULATION = 200
+CHROMOSOME_INITIAL_LENGTH = 5
 
 def chromosome_to_bezier(chromosome):
     bezier = Bezier()
@@ -103,7 +103,6 @@ class Genetic_model:
         print("Performing Mutation")
 
         mutate_chosen = np.random.choice([True, False], size = POPULATION, p=[MUTATION_RATIO, 1-MUTATION_RATIO])
-        # print([i for i, x in enumerate(mutate_chosen) if x == True])
         for chromo_index in range(POPULATION):
             if not mutate_chosen[chromo_index]:
                 continue
@@ -115,8 +114,21 @@ class Genetic_model:
             else:
                 self.mutate_remove_gene(chromo_index)
 
+    def validate(self, map): 
+        print("Validating Population")
+        i = 0
+        while(i < len(self.chromosomes)):
+            bezier = chromosome_to_bezier((self.chromosomes[i]))
+            valid = True
+            for obs in map.obstacles:
+                _, proj_length = bezier.get_projection_of(obs.position)
+                if(proj_length <= obs.radius):
+                    valid = False
+                    break
+            if valid:
+                i = i + 1
+            else:
+                del self.chromosomes[i]
 
-    def validate(self):
-
-       return
+        return
 

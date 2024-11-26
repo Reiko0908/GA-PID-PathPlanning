@@ -84,6 +84,7 @@ class Map:
                             )                    
 
             print(f"Terrain loaded from {file_name}")
+
     def save_danger_map(self, file_name):
         with open(file_name, 'w') as file:
             file.write(f"{SCREEN_WIDTH} {SCREEN_HEIGHT}\n") 
