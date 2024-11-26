@@ -26,7 +26,7 @@ def chromosome_to_bezier(chromosome):
 
 def fitness_function(chromosome, map):
     bezier = chromosome_to_bezier(chromosome)
-    path_length = measure_bezier_length(bezier)
+    path_length = bezier.get_length()
     path_danger = measure_bezier_danger(chromosome, map)
     fitness = (
         PATH_LENGTH_PRIORITIZE_FACTOR * path_length +
@@ -117,4 +117,6 @@ class Genetic_model:
 
 
     def validate(self):
+
        return
+

@@ -36,13 +36,28 @@ def plot_bezier(bezier):
 
 if __name__ == "__main__":
     map = Map()
+    map.create_obstacles()
+    # map.save_terrain("terrain.txt")
     map.load_terrain("terrain.txt")
-    map.load_danger_map("danger_map.txt")
+    # map.generate_danger_map()
+    # map.save_danger_map("danger_map.txt")
+    # map.load_danger_map("danger_map.txt")
 
-    model = Genetic_model()
-    model.generate_initial_population()
+    test_bezier = Bezier()
+    test_bezier.randomize(CHROMOSOME_INITIAL_LENGTH)
+    projection, _ = test_bezier.get_projection_of(map.obstacles[0].position)
 
-    model.evaluate_population(map)
-    model.select_elites()
-    model.crossover()
-    model.mutate()
+    # model = Genetic_model()
+    # model.generate_initial_population()
+    # model.evaluate_population(map)
+    # model.select_elites()
+    # model.crossover()
+    # model.mutate()
+
+    print(projection)
+
+    plot_terrain(map)
+    plot_bezier(test_bezier)
+    plt.scatter(map.obstacles[0].position[0], map.obstacles[0].position[1])
+    plt.scatter(projection[0], projection[1])
+    plt.show()
