@@ -46,5 +46,3 @@ if __name__ == "__main__":
     model.select_elites()
     model.crossover()
     model.mutate()
-
-

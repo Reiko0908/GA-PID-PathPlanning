@@ -100,7 +100,7 @@ class Genetic_model:
                 ]
 
     def mutate(self):
-        print("Performing mutation")
+        print("Performing Mutation")
 
         mutate_chosen = np.random.choice([True, False], size = POPULATION, p=[MUTATION_RATIO, 1-MUTATION_RATIO])
         # print([i for i, x in enumerate(mutate_chosen) if x == True])
