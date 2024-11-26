@@ -103,7 +103,7 @@ class Genetic_model:
         print("Performing mutation")
 
         mutate_chosen = np.random.choice([True, False], size = POPULATION, p=[MUTATION_RATIO, 1-MUTATION_RATIO])
-        print([i for i, x in enumerate(mutate_chosen) if x == True])
+        # print([i for i, x in enumerate(mutate_chosen) if x == True])
         for chromo_index in range(POPULATION):
             if not mutate_chosen[chromo_index]:
                 continue
@@ -117,4 +117,4 @@ class Genetic_model:
 
 
     def validate(self):
-        return
+       return
