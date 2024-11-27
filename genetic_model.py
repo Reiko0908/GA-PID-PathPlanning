@@ -6,16 +6,15 @@ import math
 from macros import *
 from bezier import *
 
-PATH_DANGER_PRIORITIZE_FACTOR = 0.6
-PATH_LENGTH_PRIORITIZE_FACTOR = 0.4
-PATH_SMOOTHNESS_PRIORITIZE_FACTOR = 0.1
+PATH_DANGER_PRIORITIZE_FACTOR = 0.8
+PATH_LENGTH_PRIORITIZE_FACTOR = 0.2
 
 CROSSOVER_RATIO = 0.5
 ELITISM_RATIO = 0.3
 MUTATION_RATIO = 0.1
 POPULATION = 200
 CHROMOSOME_INITIAL_LENGTH = 5
-NUM_GENERATIONS = 100
+NUM_GENERATIONS = 10000
 
 def chromosome_to_bezier(chromosome):
     bezier = Bezier()
@@ -25,12 +24,21 @@ def chromosome_to_bezier(chromosome):
             ])
     return bezier
 
-def fitness_function(chromosome, map):
+def fitness_function(chromosome,map,population):
+    max_path_length = 0
+    for chromo in population:
+        bezier = chromosome_to_bezier(chromo)
+        path_length = bezier.get_length()
+        max_path_length = max(max_path_length, path_length)
+
     bezier = chromosome_to_bezier(chromosome)
     path_length = bezier.get_length()
     path_danger = measure_bezier_danger(chromosome, map)
+    normalized_path_length = min(path_length / max_path_length, 1.0)
+    if path_danger >= 0.2:
+        return 100
     fitness = (
-        PATH_LENGTH_PRIORITIZE_FACTOR * path_length +
+        PATH_LENGTH_PRIORITIZE_FACTOR * normalized_path_length +
         PATH_DANGER_PRIORITIZE_FACTOR * path_danger
     )
     return fitness
@@ -57,7 +65,7 @@ class Genetic_model:
 
     def evaluate_population(self, map):
         print("Evaluating Population")
-        self.fitness_scores = [fitness_function(chromosome, map) for chromosome in self.chromosomes]
+        self.fitness_scores = [fitness_function(chromosome, map, self.chromosomes) for chromosome in self.chromosomes]
 
     def select_elites(self):
         num_elites = int(len(self.chromosomes) * ELITISM_RATIO)
