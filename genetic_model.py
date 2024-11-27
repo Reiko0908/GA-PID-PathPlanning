@@ -15,6 +15,7 @@ ELITISM_RATIO = 0.3
 MUTATION_RATIO = 0.1
 POPULATION = 200
 CHROMOSOME_INITIAL_LENGTH = 5
+NUM_GENERATIONS = 100
 
 def chromosome_to_bezier(chromosome):
     bezier = Bezier()
@@ -72,7 +73,7 @@ class Genetic_model:
         chosen_parent_indices = np.random.choice(
                 len(non_elite_indices), num_crossover, replace=False
                 )
-        for i in range(len(chosen_parent_indices - 1), 2):
+        for i in range(0,len(chosen_parent_indices)-1, 2):
             mom = self.chromosomes[chosen_parent_indices[i]]
             dad = self.chromosomes[chosen_parent_indices[i+1]]
             min_length = min(len(mom), len(dad)) # perform randomize with the smaller gene length

@@ -46,7 +46,7 @@ if __name__ == "__main__":
     # map.generate_danger_map()
     # map.save_danger_map("danger_map.txt")
     map.load_danger_map("danger_map.txt")
-
+#for generation in range(NUM_GENERATIONS):
     model = Genetic_model()
     model.generate_initial_population()
     model.evaluate_population(map)
