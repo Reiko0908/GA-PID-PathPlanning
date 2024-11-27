@@ -70,13 +70,11 @@ class Genetic_model:
     def select_elites(self):
         num_elites = int(len(self.chromosomes) * ELITISM_RATIO)
         sorted_indices = np.argsort(self.fitness_scores)  
-        self.elite_indices = sorted_indices[:num_elites]
-        # elites = [self.chromosomes[i] for i in elite_indices]
+        self.elite_indices = sorted_indices[:num_elites] 
 
     def crossover(self):
         print("Performing Crossover")
-
-        non_elite_indices = np.setdiff1d(np.arange(len(self.chromosomes)), self.elite_indices)
+        non_elite_indices = [i for i in range(len(self.chromosomes)) if i not in self.elite_indices] 
         num_crossover = int(len(non_elite_indices) * CROSSOVER_RATIO)
         chosen_parent_indices = np.random.choice(
                 len(non_elite_indices), num_crossover, replace=False
@@ -138,6 +136,30 @@ class Genetic_model:
                 i = i + 1
             else:
                 del self.chromosomes[i]
-
         return
-
+    def save_best_chromosome(self, filename, generation):
+        # Find the index of the best chromosome based on fitness scores
+        best_chromosome_index = np.argmin(self.fitness_scores)  # Minimize fitness score
+        best_chromosome = self.chromosomes[best_chromosome_index]
+    
+        # Save the best chromosome to a file with the generation number
+        with open(filename, 'a') as f:
+            f.write(f"Generation {generation}: ")
+            f.write(' '.join(map(str, [item for gene in best_chromosome for item in gene])) + '\n')
+    def load_best_chromosomes(self, filename):
+        best_chromosomes = []
+    
+        # Read the best chromosomes from the file
+        with open(filename, 'r') as f:
+            lines = f.readlines()
+        
+            # Parse each line and extract the chromosomes
+            for line in lines:
+                if line.strip():  # Skip empty lines
+                    parts = line.strip().split(': ')
+                    chromosome_data = list(map(int, parts[1].split()))
+                    # Reconstruct the chromosome (assuming gene pairs)
+                    chromosome = [chromosome_data[i:i + 2] for i in range(0, len(chromosome_data), 2)]
+                    best_chromosomes.append(chromosome)
+    
+        return best_chromosomes

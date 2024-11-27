@@ -66,6 +66,7 @@ for generation in range(NUM_GENERATIONS):
     # Update the best fitness so far if current generation has a better fitness
     if current_best_fitness < best_fitness_so_far:
         best_fitness_so_far = current_best_fitness
+        model.save_best_chromosome("best_chromosome.txt", generation)
 
     # Stop if the fitness threshold is reached
     if current_best_fitness <= FITNESS_THRESHOLD:
