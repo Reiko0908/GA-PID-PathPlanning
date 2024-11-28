@@ -6,22 +6,15 @@ import math
 from macros import *
 from bezier import *
 
-PATH_DANGER_PRIORITIZE_FACTOR = 1
-PATH_LENGTH_PRIORITIZE_FACTOR = 0
+PATH_DANGER_PRIORITIZE_FACTOR = 0.8
+PATH_LENGTH_PRIORITIZE_FACTOR = 0.2
 
 CROSSOVER_RATIO = 0.5
-ELITISM_RATIO = 0.05
-MUTATION_RATIO = 0.1
+ELITISM_RATIO = 0.1
+MUTATION_RATIO = 0.2
 POPULATION = 200
-CHROMOSOME_INITIAL_LENGTH = 5
-NUM_EPOCH = 5000
-
-def normalize_array(array):
-    min_value = min(array)
-    max_value = max(array)
-    for value in array:
-        value = (value - min_value) / (max_value - min_value)
-    return
+CHROMOSOME_INITIAL_LENGTH = 7
+NUM_EPOCH = 100
 
 def chromosome_to_bezier(chromosome):
     bezier = Bezier()
@@ -31,7 +24,9 @@ def chromosome_to_bezier(chromosome):
 def normalize_array(array):
     min_value = min(array)
     max_value = max(array)
-    return [(value - min_value) / (max_value - min_value) for value in array]
+    for i in range(len(array)):
+        array[i] = (array[i] - min_value) / (max_value - min_value)
+
 def fitness_function(normalize, danger):
     if danger >= 0.1:
         return 1
@@ -39,16 +34,18 @@ def fitness_function(normalize, danger):
         PATH_LENGTH_PRIORITIZE_FACTOR * normalize +
         PATH_DANGER_PRIORITIZE_FACTOR * danger
     )
+    return fitness
 
 class Genetic_model:
     def __init__(self):
-        print("Initializing Model")
+        # print("Initializing Model")
         self.chromosomes = []
         self.fitness_scores = []
         self.elite_indices = []
+        self.saved_data = []
 
     def generate_initial_population(self):
-        print("Generating Intial Chromosomes")
+        # print("Generating Intial Chromosomes")
         for _ in range(POPULATION):
             chromo = [START_POSITION]
             for __ in range(CHROMOSOME_INITIAL_LENGTH - 2):
@@ -61,7 +58,7 @@ class Genetic_model:
 
 
     def evaluate_population(self, map):
-        print("Evaluating Population")
+        # print("Evaluating Population")
         self.fitness_scores = [0] * len(self.chromosomes)
         bezier_lengths = []
         bezier_dangers = []
@@ -73,9 +70,9 @@ class Genetic_model:
             bezier_lengths.append(length)
             bezier_dangers.append(danger)
 
-        normalized_lengths = normalize(bezier_lengths)
+        normalize_array(bezier_lengths)
         for i in range(len(self.chromosomes)):
-            self.fitness_scores[i] = fitness_function(normalized_lengths[i], bezier_dangers[i])>>>>>>> d4109c6285134867bf0907dd3d82ddb9934f5310
+            self.fitness_scores[i] = fitness_function(bezier_lengths[i], bezier_dangers[i])
 
     def select_elites(self):
         num_elites = int(len(self.chromosomes) * ELITISM_RATIO)
@@ -84,7 +81,7 @@ class Genetic_model:
         self.non_elite_indices = sorted_indices[num_elites:]
 
     def crossover(self):
-        print("Performing Crossover") 
+        # print("Performing Crossover") 
         num_crossover = int(len(self.non_elite_indices) * CROSSOVER_RATIO)
         if num_crossover % 2 != 0:
             num_crossover -=1
@@ -120,12 +117,9 @@ class Genetic_model:
                 ]
 
     def mutate(self):
-        print("Performing Mutation")
+        # print("Performing Mutation")
 
-    # Choose which non-elite individuals will undergo mutation based on MUTATION_RATIO
         mutate_chosen = np.random.choice([True, False], size=len(self.non_elite_indices), p=[MUTATION_RATIO, 1-MUTATION_RATIO])
-
-    # Loop through the non-elite indices and apply mutation if chosen
         for i, chromo_index in enumerate(self.non_elite_indices):
             if mutate_chosen[i]:  # Apply mutation if chosen
                 mutate_type = np.random.randint(3)  # Randomly choose a mutation type
@@ -135,8 +129,9 @@ class Genetic_model:
                     self.mutate_add_gene(chromo_index)
                 else:
                     self.mutate_remove_gene(chromo_index)
+
     def validate(self, map): 
-        print("Validating Population")
+        # print("Validating Population")
         i = 0
         while(i < len(self.chromosomes)):
             bezier = chromosome_to_bezier((self.chromosomes[i]))
@@ -164,7 +159,13 @@ class Genetic_model:
             chromo.append(END_POSITION)
             self.chromosomes.append(chromo)
             valid_chromosomes += 1
-        print({valid_chromosomes}) 
+        # print({valid_chromosomes}) 
+
+    def save_epoch_results(self):
+        min_fitness = min(self.fitness_scores)
+        print(min_fitness)
+        self.saved_data.append(min_fitness)
+
     def save_best_chromosome(self, filename, generation):
         # Find the index of the best chromosome based on fitness scores
         best_chromosome_index = np.argmin(self.fitness_scores)  # Minimize fitness score
@@ -174,6 +175,7 @@ class Genetic_model:
         with open(filename, 'a') as f:
             f.write(f"Generation {generation}: ")
             f.write(' '.join(map(str, [item for gene in best_chromosome for item in gene])) + '\n')
+
     def load_best_chromosomes(self, filename):
         best_chromosomes = []
     

@@ -39,6 +39,7 @@ def measure_bezier_danger(bezier, map):
 
     # Return the average danger, or 0 if no points were sampled
     return total_danger / len(sampled_points) if len(sampled_points) > 0 else 0
+
 class Bezier:
     def __init__(self):
         self.control_points = np.array([])

@@ -4,7 +4,7 @@ import pygame
 import sys
 import os
 import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
+import matplotlib.animation as ani
 from mpl_toolkits.mplot3d import Axes3D
 
 import bezier
@@ -52,23 +52,19 @@ if __name__ == "__main__":
     model = Genetic_model()
     model.generate_initial_population() 
 
-for epoch in range(NUM_EPOCH):
-    print(f"Epoch {epoch + 1}")
-    # Evaluate population and calculate fitness
-    model.evaluate_population(map)
-    # Get the best fitness score in the current generation
-    current_best_fitness = min(model.fitness_scores)
-    print(f"Best fitness in this epoch: {current_best_fitness}")
-    if current_best_fitness <= 0.05:
-        plot_terrain(map)  # Plot the terrain
-        plot_bezier(chromosome_to_bezier(model.chromosomes[0]))  # Plot the Bezier curve of the best chromosome
-        plt.show() 
-        break
-    model.select_elites()
-    model.crossover() 
-    model.mutate()
-    model.validate(map)
-    model.full_fill_population()
+    for epoch_num in range(NUM_EPOCH):
+        print(epoch_num)
+        model.evaluate_population(map)
+        model.save_epoch_results()
+        model.select_elites()
+        model.crossover() 
+        model.mutate()
+        model.validate(map)
+        model.full_fill_population()
+
+    plt.plot(range(NUM_EPOCH), model.saved_data)
+    plt.savefig("train_results.png")
+    plt.show()
 
 
 
