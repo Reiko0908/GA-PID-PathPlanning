@@ -16,6 +16,13 @@ MUTATION_RATIO = 0.1
 POPULATION = 200
 CHROMOSOME_INITIAL_LENGTH = 5
 
+def normalize(array):
+    min_value = min(array)
+    max_value = max(array)
+    for value in array:
+        value = (value - min_value) / (max_value - min_value)
+    return
+
 def chromosome_to_bezier(chromosome):
     bezier = Bezier()
     bezier.control_points= np.array([
@@ -24,15 +31,11 @@ def chromosome_to_bezier(chromosome):
             ])
     return bezier
 
-def fitness_function(chromosome, map):
-    bezier = chromosome_to_bezier(chromosome)
-    path_length = bezier.get_length()
-    path_danger = measure_bezier_danger(chromosome, map)
-    fitness = (
-        PATH_LENGTH_PRIORITIZE_FACTOR * path_length +
-        PATH_DANGER_PRIORITIZE_FACTOR * path_danger
+def fitness_function(length, danger):
+    return  (
+        PATH_LENGTH_PRIORITIZE_FACTOR * length +
+        PATH_DANGER_PRIORITIZE_FACTOR * danger
     )
-    return fitness
 
 class Genetic_model:
     def __init__(self):
@@ -56,6 +59,25 @@ class Genetic_model:
 
     def evaluate_population(self, map):
         print("Evaluating Population")
+
+        bezier_lengths = []
+        bezier_dangers = []
+
+        for chromo in self.chromosomes:
+            bezier = chromosome_to_bezier(chromo)
+            length = bezier.get_length()
+            danger = measure_bezier_danger(bezier, map)
+
+            bezier_lengths.append(length)
+            bezier_dangers.append(danger)
+
+        normalize(bezier_lengths)
+
+        for i in range(POPULATION):
+            self.fitness_scores[i] = fitness_function(bezier_lengths[i], bezier_dangers[i])
+
+
+
         self.fitness_scores = [fitness_function(chromosome, map) for chromosome in self.chromosomes]
 
     def select_elites(self):
@@ -129,6 +151,4 @@ class Genetic_model:
                 i = i + 1
             else:
                 del self.chromosomes[i]
-
-        return
 
