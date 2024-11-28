@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.random import f
 import pygame
 import sys
 import os
@@ -6,6 +7,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 from mpl_toolkits.mplot3d import Axes3D
 
+import bezier
 from macros import *
 from bezier import *
 from map import *
@@ -40,7 +42,7 @@ def plot_bezier(bezier):
 
 if __name__ == "__main__":
     map = Map()
-    map.create_obstacles()
+    # map.create_obstacles()
     # map.save_terrain("terrain.txt")
     map.load_terrain("terrain.txt")
     # map.generate_danger_map()
@@ -48,15 +50,24 @@ if __name__ == "__main__":
     map.load_danger_map("danger_map.txt")
 
     model = Genetic_model()
-    model.generate_initial_population()
+    model.generate_initial_population() 
+
+for epoch in range(NUM_EPOCH):
+    print(f"Epoch {epoch + 1}")
+    # Evaluate population and calculate fitness
     model.evaluate_population(map)
+    # Get the best fitness score in the current generation
+    current_best_fitness = min(model.fitness_scores)
+    print(f"Best fitness in this epoch: {current_best_fitness}")
+
     model.select_elites()
     model.crossover()
     model.mutate()
     model.validate(map)
+    #model.full_fill_population()
 
-    print(len(model.chromosomes))
 
-    plot_terrain(map)
-    plot_bezier(chromosome_to_bezier(model.chromosomes[0]))
-    plt.show()
+# After training completes, plot the terrain and best Bezier curve
+plot_terrain(map)  # Plot the terrain
+plot_bezier(chromosome_to_bezier(model.chromosomes[0]))  # Plot the Bezier curve of the best chromosome
+plt.show()  # Show the plots

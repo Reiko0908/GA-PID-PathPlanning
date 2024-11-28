@@ -6,17 +6,17 @@ import math
 from macros import *
 from bezier import *
 
-PATH_DANGER_PRIORITIZE_FACTOR = 0.6
-PATH_LENGTH_PRIORITIZE_FACTOR = 0.4
-PATH_SMOOTHNESS_PRIORITIZE_FACTOR = 0.1
+PATH_DANGER_PRIORITIZE_FACTOR = 0.8
+PATH_LENGTH_PRIORITIZE_FACTOR = 0.2
 
 CROSSOVER_RATIO = 0.5
-ELITISM_RATIO = 0.3
+ELITISM_RATIO = 0.05
 MUTATION_RATIO = 0.1
 POPULATION = 200
 CHROMOSOME_INITIAL_LENGTH = 5
+NUM_EPOCH = 10
 
-def normalize(array):
+def normalize_array(array):
     min_value = min(array)
     max_value = max(array)
     for value in array:
@@ -25,16 +25,19 @@ def normalize(array):
 
 def chromosome_to_bezier(chromosome):
     bezier = Bezier()
-    bezier.control_points= np.array([
-            gene
-            for gene in chromosome
-            ])
+    bezier.control_points= np.array([gene for gene in chromosome])
     return bezier
 
-def fitness_function(length, danger):
-    return  (
-        PATH_LENGTH_PRIORITIZE_FACTOR * length +
-        PATH_DANGER_PRIORITIZE_FACTOR * danger
+def normalize_array(array):
+    min_value = min(array)
+    max_value = max(array)
+    for value in array:
+        value = (value - min_value) / (max_value - min_value)
+
+def fitness_function(path_length,path_danger):  
+    fitness = (
+        PATH_LENGTH_PRIORITIZE_FACTOR * path_length +
+        PATH_DANGER_PRIORITIZE_FACTOR * path_danger
     )
 
 class Genetic_model:
@@ -59,42 +62,33 @@ class Genetic_model:
 
     def evaluate_population(self, map):
         print("Evaluating Population")
-
         bezier_lengths = []
         bezier_dangers = []
-
         for chromo in self.chromosomes:
             bezier = chromosome_to_bezier(chromo)
             length = bezier.get_length()
             danger = measure_bezier_danger(bezier, map)
-
             bezier_lengths.append(length)
             bezier_dangers.append(danger)
 
-        normalize(bezier_lengths)
-
+        normalize_array(bezier_lengths)
         for i in range(POPULATION):
             self.fitness_scores[i] = fitness_function(bezier_lengths[i], bezier_dangers[i])
-
-
-
-        self.fitness_scores = [fitness_function(chromosome, map) for chromosome in self.chromosomes]
 
     def select_elites(self):
         num_elites = int(len(self.chromosomes) * ELITISM_RATIO)
         sorted_indices = np.argsort(self.fitness_scores)  
         self.elite_indices = sorted_indices[:num_elites]
-        # elites = [self.chromosomes[i] for i in elite_indices]
+        self.non_elite_indices = sorted_indices[num_elites:]
+        print(f"Sorted fitness scores: {np.sort(self.fitness_scores)}") 
 
     def crossover(self):
-        print("Performing Crossover")
-
-        non_elite_indices = np.setdiff1d(np.arange(len(self.chromosomes)), self.elite_indices)
-        num_crossover = int(len(non_elite_indices) * CROSSOVER_RATIO)
+        print("Performing Crossover") 
+        num_crossover = int(len(self.non_elite_indices) * CROSSOVER_RATIO)
         chosen_parent_indices = np.random.choice(
-                len(non_elite_indices), num_crossover, replace=False
+                len(self.non_elite_indices), num_crossover, replace=False
                 )
-        for i in range(len(chosen_parent_indices - 1), 2):
+        for i in range(0,len(chosen_parent_indices)-1, 2):
             mom = self.chromosomes[chosen_parent_indices[i]]
             dad = self.chromosomes[chosen_parent_indices[i+1]]
             min_length = min(len(mom), len(dad)) # perform randomize with the smaller gene length
@@ -106,7 +100,7 @@ class Genetic_model:
             self.chromosomes[chosen_parent_indices[i+1]] = daughter
 
     def mutate_add_gene(self, chromo_index):
-        position = np.random.randint(0, len(self.chromosomes[chromo_index]) - 1) 
+        position = np.random.randint(1, len(self.chromosomes[chromo_index]) - 1) 
         new_gene = [np.random.randint(SCREEN_WIDTH), np.random.randint(SCREEN_HEIGHT)]
         self.chromosomes[chromo_index].insert(position, new_gene)
 
@@ -124,18 +118,19 @@ class Genetic_model:
     def mutate(self):
         print("Performing Mutation")
 
-        mutate_chosen = np.random.choice([True, False], size = POPULATION, p=[MUTATION_RATIO, 1-MUTATION_RATIO])
-        for chromo_index in range(POPULATION):
-            if not mutate_chosen[chromo_index]:
-                continue
-            mutate_type = np.random.randint(3)
-            if mutate_type == 0:
-                self.mutate_edit_gene(chromo_index)
-            elif mutate_type == 1:
-                self.mutate_add_gene(chromo_index)
-            else:
-                self.mutate_remove_gene(chromo_index)
+    # Choose which non-elite individuals will undergo mutation based on MUTATION_RATIO
+        mutate_chosen = np.random.choice([True, False], size=len(self.non_elite_indices), p=[MUTATION_RATIO, 1-MUTATION_RATIO])
 
+    # Loop through the non-elite indices and apply mutation if chosen
+        for i, chromo_index in enumerate(self.non_elite_indices):
+            if mutate_chosen[i]:  # Apply mutation if chosen
+                mutate_type = np.random.randint(3)  # Randomly choose a mutation type
+                if mutate_type == 0:
+                    self.mutate_edit_gene(chromo_index)
+                elif mutate_type == 1:
+                    self.mutate_add_gene(chromo_index)
+                else:
+                    self.mutate_remove_gene(chromo_index)
     def validate(self, map): 
         print("Validating Population")
         i = 0
@@ -152,3 +147,43 @@ class Genetic_model:
             else:
                 del self.chromosomes[i]
 
+    def full_fill_population(self):
+        valid_chromosomes = len(self.chromosomes)
+        while valid_chromosomes < POPULATION:
+            chromo = [START_POSITION]
+            for _ in range(CHROMOSOME_INITIAL_LENGTH - 2):
+                while True:
+                    gene = [np.random.randint(SCREEN_WIDTH), np.random.randint(SCREEN_HEIGHT)]
+                    if gene != START_POSITION and gene != END_POSITION:
+                        break
+                chromo.append(gene)
+            chromo.append(END_POSITION)
+            self.chromosomes.append(chromo)
+            valid_chromosomes += 1
+        print({valid_chromosomes}) 
+    def save_best_chromosome(self, filename, generation):
+        # Find the index of the best chromosome based on fitness scores
+        best_chromosome_index = np.argmin(self.fitness_scores)  # Minimize fitness score
+        best_chromosome = self.chromosomes[best_chromosome_index]
+    
+        # Save the best chromosome to a file with the generation number
+        with open(filename, 'a') as f:
+            f.write(f"Generation {generation}: ")
+            f.write(' '.join(map(str, [item for gene in best_chromosome for item in gene])) + '\n')
+    def load_best_chromosomes(self, filename):
+        best_chromosomes = []
+    
+        # Read the best chromosomes from the file
+        with open(filename, 'r') as f:
+            lines = f.readlines()
+        
+            # Parse each line and extract the chromosomes
+            for line in lines:
+                if line.strip():  # Skip empty lines
+                    parts = line.strip().split(': ')
+                    chromosome_data = list(map(int, parts[1].split()))
+                    # Reconstruct the chromosome (assuming gene pairs)
+                    chromosome = [chromosome_data[i:i + 2] for i in range(0, len(chromosome_data), 2)]
+                    best_chromosomes.append(chromosome)
+    
+        return best_chromosomes
