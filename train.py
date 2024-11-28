@@ -59,15 +59,16 @@ for epoch in range(NUM_EPOCH):
     # Get the best fitness score in the current generation
     current_best_fitness = min(model.fitness_scores)
     print(f"Best fitness in this epoch: {current_best_fitness}")
-
+    if current_best_fitness <= 0.05:
+        plot_terrain(map)  # Plot the terrain
+        plot_bezier(chromosome_to_bezier(model.chromosomes[0]))  # Plot the Bezier curve of the best chromosome
+        plt.show() 
+        break
     model.select_elites()
-    model.crossover()
+    model.crossover() 
     model.mutate()
     model.validate(map)
-    #model.full_fill_population()
+    model.full_fill_population()
 
 
-# After training completes, plot the terrain and best Bezier curve
-plot_terrain(map)  # Plot the terrain
-plot_bezier(chromosome_to_bezier(model.chromosomes[0]))  # Plot the Bezier curve of the best chromosome
-plt.show()  # Show the plots
+

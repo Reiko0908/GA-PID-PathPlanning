@@ -6,15 +6,15 @@ import math
 from macros import *
 from bezier import *
 
-PATH_DANGER_PRIORITIZE_FACTOR = 0.8
-PATH_LENGTH_PRIORITIZE_FACTOR = 0.2
+PATH_DANGER_PRIORITIZE_FACTOR = 1
+PATH_LENGTH_PRIORITIZE_FACTOR = 0
 
 CROSSOVER_RATIO = 0.5
 ELITISM_RATIO = 0.05
 MUTATION_RATIO = 0.1
 POPULATION = 200
 CHROMOSOME_INITIAL_LENGTH = 5
-NUM_EPOCH = 10
+NUM_EPOCH = 5000
 
 def chromosome_to_bezier(chromosome):
     bezier = Bezier()
@@ -24,13 +24,13 @@ def chromosome_to_bezier(chromosome):
 def normalize(array):
     min_value = min(array)
     max_value = max(array)
-    for value in array:
-        value = (value - min_value) / (max_value - min_value)
-
-def fitness_function(path_length,path_danger):  
+    return [(value - min_value) / (max_value - min_value) for value in array]
+def fitness_function(normalize, danger):
+    if danger >= 0.1:
+        return 1
     fitness = (
-        PATH_LENGTH_PRIORITIZE_FACTOR * path_length +
-        PATH_DANGER_PRIORITIZE_FACTOR * path_danger
+        PATH_LENGTH_PRIORITIZE_FACTOR * normalize +
+        PATH_DANGER_PRIORITIZE_FACTOR * danger
     )
     return fitness
 
@@ -56,33 +56,35 @@ class Genetic_model:
 
     def evaluate_population(self, map):
         print("Evaluating Population")
+        self.fitness_scores = [0] * len(self.chromosomes)
         bezier_lengths = []
         bezier_dangers = []
         for chromo in self.chromosomes:
             bezier = chromosome_to_bezier(chromo)
             length = bezier.get_length()
             danger = measure_bezier_danger(bezier, map)
-
+            
             bezier_lengths.append(length)
             bezier_dangers.append(danger)
 
-        normalize(bezier_lengths)  
-
-        for i in range(POPULATION):
-            self.fitness_scores[i] = fitness_function(bezier_lengths[i], bezier_dangers[i]) 
+        normalized_lengths = normalize(bezier_lengths)
+        for i in range(len(self.chromosomes)):
+            self.fitness_scores[i] = fitness_function(normalized_lengths[i], bezier_dangers[i])
     def select_elites(self):
         num_elites = int(len(self.chromosomes) * ELITISM_RATIO)
         sorted_indices = np.argsort(self.fitness_scores)  
         self.elite_indices = sorted_indices[:num_elites]
         self.non_elite_indices = sorted_indices[num_elites:]
-        print(f"Sorted fitness scores: {np.sort(self.fitness_scores)}") 
 
     def crossover(self):
         print("Performing Crossover") 
         num_crossover = int(len(self.non_elite_indices) * CROSSOVER_RATIO)
+        if num_crossover % 2 != 0:
+            num_crossover -=1
         chosen_parent_indices = np.random.choice(
                 len(self.non_elite_indices), num_crossover, replace=False
                 )
+        np.random.shuffle(chosen_parent_indices)
         for i in range(0,len(chosen_parent_indices)-1, 2):
             mom = self.chromosomes[chosen_parent_indices[i]]
             dad = self.chromosomes[chosen_parent_indices[i+1]]

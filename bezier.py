@@ -25,18 +25,20 @@ BINARY_SEARCH_STOP_THRESHOLD = 1E-5
 #         smoothness += angle
 #     return smoothness
 
-def measure_bezier_danger(chromosome, map):
+def measure_bezier_danger(bezier, map):
     danger_map = map.danger_map
-    active_genes = [i for i, gene in enumerate(chromosome) if gene == 1]
-    if len(active_genes) <= 2:
-        return 0
-    active_genes = active_genes[1:-1]
-    total_danger = sum([
-            danger_map[i // SCREEN_WIDTH, i % SCREEN_WIDTH] for i in active_genes
-            ])
-    average_danger = total_danger / len(active_genes)
-    return average_danger
+    
+    # Generate sampling points along the Bézier curve, excluding the start and end
+    t_values = np.linspace(0, 1, BEZIER_RESOLUTION)
+    sampled_points = [bezier.calculate_local_point(t) for t in t_values[1:-1]]  # Exclude t=0 and t=1
+    total_danger = 0
+    for x, y in sampled_points:
+        row, col = int(y), int(x)
+        if 0 <= row < danger_map.shape[0] and 0 <= col < danger_map.shape[1]:
+            total_danger += danger_map[row, col]
 
+    # Return the average danger, or 0 if no points were sampled
+    return total_danger / len(sampled_points) if len(sampled_points) > 0 else 0
 class Bezier:
     def __init__(self):
         self.control_points = np.array([])
@@ -76,7 +78,7 @@ class Bezier:
             term = coefficient * (self.control_points[i + 1] - self.control_points[i])
             term = term * t**i * (1 - t)**(bezier_order - 1 - i)
             derivative += term
-            return derivative
+        return derivative
 
     def get_projection_of(self, target_point):
         t, t_left, t_right = 0, 0, 0
