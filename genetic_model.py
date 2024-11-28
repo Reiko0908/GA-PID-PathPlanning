@@ -10,7 +10,7 @@ PATH_DANGER_PRIORITIZE_FACTOR = 0.8
 PATH_LENGTH_PRIORITIZE_FACTOR = 0.2
 
 CROSSOVER_RATIO = 0.5
-ELITISM_RATIO = 0.2
+ELITISM_RATIO = 0.05
 MUTATION_RATIO = 0.1
 POPULATION = 200
 CHROMOSOME_INITIAL_LENGTH = 5
@@ -21,21 +21,16 @@ def chromosome_to_bezier(chromosome):
     bezier.control_points= np.array([gene for gene in chromosome])
     return bezier
 
-def fitness_function(chromosome,map, population):
-    max_path_length = max([chromosome_to_bezier(chromo).get_length() for chromo in population])
+def normalize(array):
+    min_value = min(array)
+    max_value = max(array)
+    for value in array:
+        value = (value - min_value) / (max_value - min_value)
 
-    bezier = chromosome_to_bezier(chromosome)
-    path_length = bezier.get_length()
-    path_danger = measure_bezier_danger(chromosome, map)
-    normalized_path_length = min(path_length / max_path_length, 1.0)
-    if path_danger >= 0.2:
-        fitness_penalty = 1
-    else:
-        fitness_penalty = 0
+def fitness_function(path_length,path_danger):  
     fitness = (
-        PATH_LENGTH_PRIORITIZE_FACTOR * normalized_path_length +
-        PATH_DANGER_PRIORITIZE_FACTOR * path_danger +
-        fitness_penalty
+        PATH_LENGTH_PRIORITIZE_FACTOR * path_length +
+        PATH_DANGER_PRIORITIZE_FACTOR * path_danger
     )
     return fitness
 
@@ -61,13 +56,26 @@ class Genetic_model:
 
     def evaluate_population(self, map):
         print("Evaluating Population")
-        self.fitness_scores = [fitness_function(chromosome, map, self.chromosomes) for chromosome in self.chromosomes]
+        bezier_lengths = []
+        bezier_dangers = []
+        for chromo in self.chromosomes:
+            bezier = chromosome_to_bezier(chromo)
+            length = bezier.get_length()
+            danger = measure_bezier_danger(bezier, map)
 
+            bezier_lengths.append(length)
+            bezier_dangers.append(danger)
+
+        normalize(bezier_lengths)  
+
+        for i in range(POPULATION):
+            self.fitness_scores[i] = fitness_function(bezier_lengths[i], bezier_dangers[i]) 
     def select_elites(self):
         num_elites = int(len(self.chromosomes) * ELITISM_RATIO)
         sorted_indices = np.argsort(self.fitness_scores)  
         self.elite_indices = sorted_indices[:num_elites]
         self.non_elite_indices = sorted_indices[num_elites:]
+        print(f"Sorted fitness scores: {np.sort(self.fitness_scores)}") 
 
     def crossover(self):
         print("Performing Crossover") 

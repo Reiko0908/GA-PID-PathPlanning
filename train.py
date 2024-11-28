@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 from mpl_toolkits.mplot3d import Axes3D
 
+import bezier
 from macros import *
 from bezier import *
 from map import *
@@ -53,7 +54,6 @@ if __name__ == "__main__":
 
 for epoch in range(NUM_EPOCH):
     print(f"Epoch {epoch + 1}")
-
     # Evaluate population and calculate fitness
     model.evaluate_population(map)
     # Get the best fitness score in the current generation
@@ -64,7 +64,7 @@ for epoch in range(NUM_EPOCH):
     model.crossover()
     model.mutate()
     model.validate(map)
-    model.full_fill_population()
+    #model.full_fill_population()
 
 
 # After training completes, plot the terrain and best Bezier curve
