@@ -42,24 +42,24 @@ def plot_bezier(bezier):
 
 if __name__ == "__main__":
     map = Map()
-    # map.create_obstacles()
-    # map.save_terrain("terrain.txt")
-    map.load_terrain("terrain.txt")
-    # map.generate_danger_map()
-    # map.save_danger_map("danger_map.txt")
-    map.load_danger_map("danger_map.txt")
+    map.create_obstacles()
+    map.save_terrain("terrain.txt")
+    # map.load_terrain("terrain.txt")
+    map.generate_danger_map()
+    map.save_danger_map("danger_map.txt")
+    # map.load_danger_map("danger_map.txt")
 
     model = Genetic_model()
     model.generate_initial_population() 
 
     for epoch_num in range(NUM_EPOCH):
-        print(epoch_num)
         model.evaluate_population(map)
         model.save_epoch_results()
         model.select_elites()
         model.crossover() 
         model.mutate()
         model.validate(map)
+        print(len(model.chromosomes))
         model.full_fill_population()
 
     plt.plot(range(NUM_EPOCH), model.saved_data)

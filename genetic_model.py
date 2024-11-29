@@ -122,13 +122,14 @@ class Genetic_model:
         mutate_chosen = np.random.choice([True, False], size=len(self.non_elite_indices), p=[MUTATION_RATIO, 1-MUTATION_RATIO])
         for i, chromo_index in enumerate(self.non_elite_indices):
             if mutate_chosen[i]:  # Apply mutation if chosen
-                mutate_type = np.random.randint(3)  # Randomly choose a mutation type
-                if mutate_type == 0:
-                    self.mutate_edit_gene(chromo_index)
-                elif mutate_type == 1:
-                    self.mutate_add_gene(chromo_index)
-                else:
-                    self.mutate_remove_gene(chromo_index)
+                self.mutate_edit_gene(chromo_index)
+                # mutate_type = np.random.randint(3)  # Randomly choose a mutation type
+                # if mutate_type == 0:
+                #     self.mutate_edit_gene(chromo_index)
+                # elif mutate_type == 1:
+                #     self.mutate_add_gene(chromo_index)
+                # else:
+                #     self.mutate_remove_gene(chromo_index)
 
     def validate(self, map): 
         # print("Validating Population")
