@@ -12,6 +12,7 @@ from macros import *
 from bezier import *
 from map import *
 from genetic_model import *
+from PID import *
 
 def plot_3d_terrain(map):
     fig = plt.figure(figsize=(10, 8))
@@ -65,7 +66,10 @@ if __name__ == "__main__":
     model = Genetic_model()
     model.generate_initial_population() 
 
-    # plot_terrain(map)
+    plot_terrain(map)
+
+    best_fitness = 1.0
+    best_chromosome = None
 
     for epoch_num in range(NUM_EPOCH):
         model.evaluate_population(map)
@@ -75,14 +79,22 @@ if __name__ == "__main__":
         model.crossover()
         model.mutate()
 
+        best_chromosome_index = np.argmin(model.fitness_scores)
+        if(model.fitness_scores[best_chromosome_index] < best_fitness):
+            best_fitness = model.fitness_scores[best_chromosome_index]
+            best_chromosome = model.chromosomes[best_chromosome_index]
+
+
+
     # print(len(model.chromosomes))
-    # plot_bezier(chromosome_to_bezier(model.chromosomes[0]))
+    plot_bezier(chromosome_to_bezier(best_chromosome))
 
     # model.crossover() 
     # model.mutate()
     # model.validate(map)
     # model.full_fill_population()
 
-    plt.plot(range(NUM_EPOCH), model.saved_data)
-    plt.savefig("train_results.png")
+    # plt.plot(range(NUM_EPOCH), model.saved_data)
+    # plt.savefig("train_results.png")
     plt.show()
+    
