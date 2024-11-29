@@ -64,7 +64,7 @@ class Genetic_model:
         bezier_dangers = []
         for chromo in self.chromosomes:
             bezier = chromosome_to_bezier(chromo)
-            length = bezier.get_length()
+            length = bezier.get_length(bezier)
             danger = measure_bezier_danger(bezier, map)
             
             bezier_lengths.append(length)
@@ -78,7 +78,7 @@ class Genetic_model:
         num_elites = int(len(self.chromosomes) * ELITISM_RATIO)
         sorted_indices = np.argsort(self.fitness_scores)  
         self.elite_indices = sorted_indices[:num_elites]
-        self.non_elite_indices = sorted_indices[num_elites:]
+        self.non_elite_indices = sorted_indices[num_elites:] 
 
     def crossover(self):
         # print("Performing Crossover") 
@@ -101,11 +101,13 @@ class Genetic_model:
             self.chromosomes[chosen_parent_indices[i+1]] = daughter
 
     def mutate_add_gene(self, chromo_index):
-        position = np.random.randint(1, len(self.chromosomes[chromo_index]) - 1) 
+       # Access the actual chromosome using the index from non_elite_indices
+        position = np.random.randint(1, len(self.chromosomes[chromo_index]) - 1)
         new_gene = [np.random.randint(SCREEN_WIDTH), np.random.randint(SCREEN_HEIGHT)]
         self.chromosomes[chromo_index].insert(position, new_gene)
 
     def mutate_remove_gene(self, chromo_index):
+        # Access the actual chromosome using the index from non_elite_indices
         position = np.random.randint(1, len(self.chromosomes[chromo_index]) - 1) 
         del self.chromosomes[chromo_index][position]
 
@@ -114,37 +116,40 @@ class Genetic_model:
         self.chromosomes[chromo_index][position] = [
                 np.random.randint(SCREEN_WIDTH),
                 np.random.randint(SCREEN_HEIGHT)
-                ]
+            ]
 
     def mutate(self):
         # print("Performing Mutation")
-
-        mutate_chosen = np.random.choice([True, False], size=len(self.non_elite_indices), p=[MUTATION_RATIO, 1-MUTATION_RATIO])
-        for i, chromo_index in enumerate(self.non_elite_indices):
-            if mutate_chosen[i]:  # Apply mutation if chosen
-                mutate_type = np.random.randint(3)  # Randomly choose a mutation type
-                if mutate_type == 0:
-                    self.mutate_edit_gene(chromo_index)
-                elif mutate_type == 1:
+        mutate_chosen = np.random.choice([True, False], size=len(self.non_elite_indices), p=[MUTATION_RATIO, 1 - MUTATION_RATIO])
+        for i, mutate_flag in enumerate(mutate_chosen):
+            if mutate_flag:
+                chromo_index = self.non_elite_indices[i]  # This is now an integer, not a list
+                mutation_type = np.random.choice(['add', 'remove', 'edit'])
+                if mutation_type == 'add':
                     self.mutate_add_gene(chromo_index)
-                else:
+                elif mutation_type == 'remove':
                     self.mutate_remove_gene(chromo_index)
+                elif mutation_type == 'edit':
+                    self.mutate_edit_gene(chromo_index)
 
     def validate(self, map): 
         # print("Validating Population")
-        i = 0
-        while(i < len(self.chromosomes)):
-            bezier = chromosome_to_bezier((self.chromosomes[i]))
+        valid_chromosomes = []
+    
+        for chromo in self.chromosomes:
+            bezier = chromosome_to_bezier(chromo)
             valid = True
             for obs in map.obstacles:
                 _, proj_length = bezier.get_projection_of(obs.position)
-                if(proj_length <= obs.radius):
+                if proj_length <= obs.radius:  # Check if chromosome is invalid
                     valid = False
                     break
+        
             if valid:
-                i = i + 1
-            else:
-                del self.chromosomes[i]
+                valid_chromosomes.append(chromo)  # Only keep valid chromosomes
+
+        # Replace the old population with the validated one
+        self.chromosomes = valid_chromosomes
 
     def full_fill_population(self):
         valid_chromosomes = len(self.chromosomes)
