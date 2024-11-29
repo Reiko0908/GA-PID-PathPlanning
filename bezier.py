@@ -12,51 +12,6 @@ BEZIER_CONTROL_POINT_COLOR = (0, 0, 255)
 
 BINARY_SEARCH_STOP_THRESHOLD = 1E-5
 
-# def calculate_bezier_smoothness(bezier):
-#     bezier_points = bezier.sample_points()
-#     smoothness = 0
-#     for i in range(1, len(bezier_points) - 1):
-#         p1, p2, p3 = bezier_points[i - 1], bezier_points[i], bezier_points[i + 1]
-#         vec1 = p2 - p1
-#         vec2 = p3 - p2
-#         angle = np.arccos(
-#             np.clip(np.dot(vec1, vec2) / (np.linalg.norm(vec1) * np.linalg.norm(vec2)), -1, 1)
-#         )
-#         smoothness += angle
-#     return smoothness
-
-def measure_bezier_danger(bezier, terrain):
-    """Measures the average danger along a Bézier curve on a danger map.
-
-    Args:
-        bezier: An object with a method `calculate_local_point(t)` for evaluating points on the curve.
-        terrain: An object with a 2D NumPy array attribute `danger_map`.
-
-    Returns:
-        The average danger value along the Bézier curve.
-    """
-    danger_map = terrain.danger_map
-    
-    # Generate sampling points along the Bézier curve
-    t_values = np.linspace(0, 1, BEZIER_RESOLUTION)
-    sampled_points = np.array([bezier.calculate_local_point(t) for t in t_values[1:-1]])
-    
-    # Convert points to grid indices
-    indices = np.floor(sampled_points).astype(int)  # Use floor for safety
-    
-    # Filter points within bounds
-    valid_mask = (
-        (indices[:, 0] >= 0) & (indices[:, 0] < danger_map.shape[1]) &  # x bounds
-        (indices[:, 1] >= 0) & (indices[:, 1] < danger_map.shape[0])    # y bounds
-    )
-    valid_indices = indices[valid_mask]
-    
-    # Accumulate danger values
-    total_danger = sum(danger_map[y, x] for x, y in valid_indices)
-    
-    # Return the average danger, or 0 if no points are valid
-    return total_danger / len(valid_indices) if len(valid_indices) > 0 else 0
-
 class Bezier:
     def __init__(self):
         self.control_points = np.array([])
@@ -143,11 +98,8 @@ class Bezier:
     def get_length(self,bezier):
         t_values = np.linspace(0, 1,BEZIER_RESOLUTION)
         sampled_points = np.array([bezier.calculate_local_point(t) for t in t_values])
-    
         # Calculate the distances between consecutive points
         distances = np.sqrt(np.sum(np.diff(sampled_points, axis=0) ** 2, axis=1))
-    
         # Sum up the distances to approximate the curve length
         total_length = np.sum(distances)
-    
         return total_length

@@ -50,7 +50,7 @@ class Map:
                         danger += 1 - (np.log10(dist - radius) / np.log10(outer_limit - radius))
                 self.danger_map[y, x] = min(danger, 1)
         return self.danger_map
-   
+    
     def save_terrain(self, file_name):
         with open(file_name, 'w') as file:
             file.write(f"obstacles {len(self.obstacles)}\n")

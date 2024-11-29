@@ -13,6 +13,20 @@ from bezier import *
 from map import *
 from genetic_model import *
 
+def plot_3d_terrain(map):
+    fig = plt.figure(figsize=(10, 8))
+    ax = fig.add_subplot(111, projection='3d')
+    x = np.linspace(0, SCREEN_WIDTH, SCREEN_WIDTH)
+    y = np.linspace(0, SCREEN_HEIGHT, SCREEN_HEIGHT)
+    x, y = np.meshgrid(x, y)
+    surf = ax.plot_surface(x, y, map.danger_map, cmap='hot', edgecolor='none')
+    fig.colorbar(surf, ax=ax, label='Danger Level')
+    ax.set_title("3D Danger Map")
+    ax.set_xlabel('Width (X)')
+    ax.set_ylabel('Height (Y)')
+    ax.set_zlabel('Danger Level')
+    plt.show()    
+
 def plot_terrain(map):
     plt.figure(figsize=(SCREEN_WIDTH/100, SCREEN_HEIGHT/100))
     plt.xlim(0, SCREEN_WIDTH)
@@ -51,19 +65,24 @@ if __name__ == "__main__":
     model = Genetic_model()
     model.generate_initial_population() 
 
+    # plot_terrain(map)
+
     for epoch_num in range(NUM_EPOCH):
         model.evaluate_population(map)
+        model.separate_elites()
+        print(len(model.elite_indices))
         model.save_epoch_results()
-        model.select_elites()
-        model.crossover() 
+        model.crossover()
         model.mutate()
-        model.validate(map)
-        print(len(model.chromosomes))
-        model.full_fill_population()
+
+    # print(len(model.chromosomes))
+    # plot_bezier(chromosome_to_bezier(model.chromosomes[0]))
+
+    # model.crossover() 
+    # model.mutate()
+    # model.validate(map)
+    # model.full_fill_population()
 
     plt.plot(range(NUM_EPOCH), model.saved_data)
     plt.savefig("train_results.png")
     plt.show()
-
-
-
