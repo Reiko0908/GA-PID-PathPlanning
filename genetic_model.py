@@ -11,7 +11,7 @@ ELIMINATION_THRESHOLD = 0.25
 MUTATION_RATIO = 0.2
 POPULATION = 200
 CHROMOSOME_INITIAL_LENGTH = 7
-NUM_EPOCH = 10
+NUM_EPOCH = 50
 
 def chromosome_to_bezier(chromosome):
     bezier = Bezier()
@@ -117,7 +117,8 @@ class Genetic_model:
         self.chromosomes[chromo_index].insert(position, new_gene)
 
     def mutate_remove_gene(self, chromo_index):
-        # Access the actual chromosome using the index from non_elite_indices
+        if len(self.chromosomes[chromo_index]) <= 3:
+            return
         position = np.random.randint(1, len(self.chromosomes[chromo_index]) - 1) 
         del self.chromosomes[chromo_index][position]
 
