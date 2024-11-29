@@ -44,8 +44,7 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
     pygame.display.set_caption("PID test")
 
-    bezier_curve = Bezier()
-    bezier_curve.randomize(3)
+    bezier_curve = chromosome_to_bezier(best_chromosome)
 
     car = Car("car.png")
 
@@ -60,5 +59,4 @@ if __name__ == "__main__":
         car.limit_to_screen()
         pygame.display.flip()
         pygame.time.Clock().tick(SCREEN_FPS)
-
     pygame.quit()
