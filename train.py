@@ -42,13 +42,12 @@ def plot_bezier(bezier):
 
 if __name__ == "__main__":
     map = Map()
-    map.create_obstacles()
-    map.save_terrain("terrain.txt")
-    # map.load_terrain("terrain.txt")
-    map.generate_danger_map()
-    map.save_danger_map("danger_map.txt")
-    # map.load_danger_map("danger_map.txt")
-
+    # map.create_obstacles()
+    # map.save_terrain("terrain.txt")
+    map.load_terrain("terrain.txt")
+    # map.generate_danger_map()
+    # map.save_danger_map("danger_map.txt")
+    map.load_danger_map("danger_map.txt")
     model = Genetic_model()
     model.generate_initial_population() 
 
