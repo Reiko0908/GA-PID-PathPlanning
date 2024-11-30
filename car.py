@@ -20,7 +20,7 @@ class Car:
     def __init__(self, image_path):
         image = pygame.image.load(image_path)
         self.img = pygame.transform.scale_by(image, CAR_SCALE)
-        self.heading = np.array([0, -1])
+        self.heading = np.array([0, 1])
         self.position = np.array(START_POSITION)
 
     def game_draw(self, screen):

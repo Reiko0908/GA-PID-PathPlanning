@@ -97,4 +97,23 @@ if __name__ == "__main__":
     # plt.plot(range(NUM_EPOCH), model.saved_data)
     # plt.savefig("train_results.png")
     plt.show()
-    
+    pygame.init()
+    screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+    pygame.display.set_caption("PID test")
+
+    bezier_curve = chromosome_to_bezier(best_chromosome)
+
+    car = Car("car.png")
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+        screen.fill("black")
+        bezier_curve.game_draw(screen)
+        car.game_draw(screen)
+        PID(car, bezier_curve, KP, KI, KD)
+        car.limit_to_screen()
+        pygame.display.flip()
+        pygame.time.Clock().tick(SCREEN_FPS)
+    pygame.quit()
