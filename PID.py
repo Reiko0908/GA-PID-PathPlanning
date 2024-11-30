@@ -5,6 +5,7 @@ import sys
 from bezier import *
 from macros import *
 from car import *
+from genetic_model import *
 
 KP = 0.5
 KD = 0.1
@@ -59,4 +60,5 @@ if __name__ == "__main__":
         car.limit_to_screen()
         pygame.display.flip()
         pygame.time.Clock().tick(SCREEN_FPS)
+
     pygame.quit()

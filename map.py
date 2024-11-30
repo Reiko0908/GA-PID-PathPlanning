@@ -114,3 +114,17 @@ class Map:
                 self.danger_map[y, x] = danger
         
         print(f"Danger map loaded from {file_name}")
+
+    def plot_3d_terrain(self):
+        fig = plt.figure(figsize=(10, 8))
+        ax = fig.add_subplot(111, projection='3d')
+        x = np.linspace(0, SCREEN_WIDTH, SCREEN_WIDTH)
+        y = np.linspace(0, SCREEN_HEIGHT, SCREEN_HEIGHT)
+        x, y = np.meshgrid(x, y)
+        surf = ax.plot_surface(x, y, self.danger_map, cmap='hot', edgecolor='none')
+        fig.colorbar(surf, ax=ax, label='Danger Level')
+        ax.set_title("3D Danger Map")
+        ax.set_xlabel('Width (X)')
+        ax.set_ylabel('Height (Y)')
+        ax.set_zlabel('Danger Level')
+        plt.show()    

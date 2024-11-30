@@ -76,25 +76,13 @@ if __name__ == "__main__":
         model.separate_elites()
         print(len(model.elite_indices))
         model.save_epoch_results()
+        model.track_best_chromosome()
         model.crossover()
         model.mutate()
 
-        best_chromosome_index = np.argmin(model.fitness_scores)
-        if(model.fitness_scores[best_chromosome_index] < best_fitness):
-            best_fitness = model.fitness_scores[best_chromosome_index]
-            best_chromosome = model.chromosomes[best_chromosome_index]
+    model.save_best_chromosome("best_chromosome.txt")
 
-
-
-    # print(len(model.chromosomes))
-    plot_bezier(chromosome_to_bezier(best_chromosome))
-
-    # model.crossover() 
-    # model.mutate()
-    # model.validate(map)
-    # model.full_fill_population()
-
+    plot_bezier(chromosome_to_bezier(model.best_chromosome))
     # plt.plot(range(NUM_EPOCH), model.saved_data)
     # plt.savefig("train_results.png")
     plt.show()
-    

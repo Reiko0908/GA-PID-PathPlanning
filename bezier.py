@@ -9,6 +9,8 @@ from macros import *
 BEZIER_RESOLUTION = 50
 BEZIER_LOCAL_POINT_COLOR = (0, 0, 255)
 BEZIER_CONTROL_POINT_COLOR = (0, 0, 255)
+BEZIER_SPLINE_COLOR = (72, 61, 139)
+BEZIER_SPLINE_WIDTH = 5
 
 BINARY_SEARCH_STOP_THRESHOLD = 1E-5
 
@@ -35,13 +37,10 @@ class Bezier:
 
 
     def game_draw(self, screen):
-        for point in self.control_points:
-            pygame.draw.circle(screen, BEZIER_CONTROL_POINT_COLOR, point.tolist(), 10)
-
         t_values = np.linspace(0, 1, BEZIER_RESOLUTION)
-        for t in t_values:
-            local_point = self.calculate_local_point(t)
-            pygame.draw.circle(screen, BEZIER_LOCAL_POINT_COLOR, local_point.tolist(), 5)
+        local_points = [self.calculate_local_point(t) for t in t_values]
+        for i in range(1, BEZIER_RESOLUTION):
+            pygame.draw.line(screen, BEZIER_SPLINE_COLOR, local_points[i-1], local_points[i], BEZIER_SPLINE_WIDTH)
 
     def calculate_first_derivative(self, t):
         derivative = np.zeros(2)
