@@ -5,68 +5,77 @@ import os
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+from map import *
+from car import *
+from genetic_model import *
+from bezier import *
 from macros import *
 
-# if __name__ == "__main__":
-#     pygame.init()
-#     screen = pygame.display.set_mode((1500, 800))
-#     pygame.display.set_caption('Path planning and Trajectory Tracking using Bezier Curve, Genetic Algorithm, Artificial Potential Field and PID Control')
-#     clock = pygame.time.Clock()
-#
-#     car = Car("car.png")
-#     map = Map()
-#     map.create_obstacles()
-#     map.save_terrain("terrain.txt")
-#     map.load_terrain("terrain.txt")
-#
-#     map.generate_danger_map()
-#     danger_map = map.danger_map
-#     fig = plt.figure(figsize=(10, 8))
-#     ax = fig.add_subplot(111, projection='3d')
-#
-#     # Generate coordinate grid
-#     x = np.linspace(0, SCREEN_WIDTH, SCREEN_WIDTH)
-#     y = np.linspace(0, SCREEN_HEIGHT, SCREEN_HEIGHT)
-#     x, y = np.meshgrid(x, y)
-#
-#     # Plotting the surface
-#     surf = ax.plot_surface(x, y, danger_map, cmap='hot', edgecolor='none')
-#
-#     # Adding color bar
-#     fig.colorbar(surf, ax=ax, label='Danger Level')
-#
-#     # Set labels and title
-#     ax.set_title("3D Danger Map")
-#     ax.set_xlabel('Width (X)')
-#     ax.set_ylabel('Height (Y)')
-#     ax.set_zlabel('Danger Level')
-#
-#     # Show the plot
-#     plt.show()    
-#
-#     model = Genetic_model(map)
-#
-#     for obstacle in map.obstacles:
-#         print(f"Position: {obstacle.position}, Radius: {obstacle.radius}")
-#     model.generate_initial_population()
-# #    model.select_elites()
-# #    model.crossover()    
-#     print('Starting Simulation')
-#     while True:
-#         clock.tick(SCREEN_FPS)
-#         screen.fill("gray")
-#         for event in pygame.event.get():
-#             if event.type == pygame.QUIT:
-#                 sys.exit()
-#
-#         keys = pygame.key.get_pressed()
-#
-#         car.update(keys)
-#
-#         # Draw
-#         map.draw(screen)
-#         car.draw(screen)
-#
-#         pygame.display.flip()
-#
-# pygame.quit()
+KP = 0.005
+KI = 0.000001
+KD = 0.00003
+
+def pid(car, bezier):
+    if not hasattr(pid, 'integral_term'):
+        pid.integral_term = 0
+        pid.prev_y_err = 0
+
+    # z is car's predicted next position
+    # p is the projection of z on the bezier curve
+    # y_err = distance between z and p
+    # omega is the angular velocity of the car
+
+    z = car.position + car.heading * CAR_VELOCITY / SCREEN_FPS
+    p, dist_zp = bezier.get_projection_of(z)
+    vec_zp = p - z
+    y_err = np.cross(car.heading, vec_zp) * dist_zp
+    
+    p_term = KP * y_err / SCREEN_FPS
+    pid.integral_term += KI * (y_err + pid.prev_y_err) / 2.0 / SCREEN_FPS
+    d_term = KD * (y_err - pid.prev_y_err) * SCREEN_FPS
+
+    omega = p_term + pid.integral_term + d_term
+    pid.prev_y_err = y_err
+
+    return omega
+
+
+if __name__ == "__main__":
+    pygame.init()
+    screen = pygame.display.set_mode((1500, 800))
+    pygame.display.set_caption('Path planning and Trajectory Tracking using Bezier Curve, Genetic Algorithm, Artificial Potential Field and PID Control')
+    clock = pygame.time.Clock()
+
+    car = Car("car.png")
+    map = Map()
+    # map.create_obstacles()
+    # map.save_terrain("terrain.txt")
+    map.load_terrain("terrain.txt")
+    map.load_danger_map("danger_map.txt")
+
+    model = Genetic_model()
+    model.load_best_chromosomes("best_chromosome.txt")
+
+    path = chromosome_to_bezier(model.best_chromosome)
+
+    omega = 0
+    while True:
+        clock.tick(SCREEN_FPS)
+        screen.fill("gray")
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_f]: continue
+
+        car.update(omega)
+        omega = pid(car, path)
+
+        map.game_draw(screen)
+        car.game_draw(screen)
+        path.game_draw(screen)
+
+        pygame.display.flip()
+
+pygame.quit()

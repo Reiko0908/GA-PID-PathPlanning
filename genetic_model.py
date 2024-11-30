@@ -44,6 +44,8 @@ class Genetic_model:
         self.elite_indices = []
         self.non_elite_indices = []
         self.saved_data = []
+        self.best_finess = 1.0
+        self.best_chromosome = []
 
     def generate_initial_population(self):
         for _ in range(POPULATION):
@@ -117,7 +119,6 @@ class Genetic_model:
         self.chromosomes[chromo_index].insert(position, new_gene)
 
     def mutate_remove_gene(self, chromo_index):
-        # Access the actual chromosome using the index from non_elite_indices
         if(len(self.chromosomes[chromo_index])) <= 3:
             return
         position = np.random.randint(1, len(self.chromosomes[chromo_index]) - 1) 
@@ -160,34 +161,30 @@ class Genetic_model:
 
     def save_epoch_results(self):
         min_fitness = min(self.fitness_scores)
-        
         print(min_fitness)
         self.saved_data.append(min_fitness)
 
-    # def save_best_chromosome(self, filename, generation):
-    #     # Find the index of the best chromosome based on fitness scores
-    #     best_chromosome_index = np.argmin(self.fitness_scores)  # Minimize fitness score
-    #     best_chromosome = self.chromosomes[best_chromosome_index]
-    #
-    #     # Save the best chromosome to a file with the generation number
-    #     with open(filename, 'a') as f:
-    #         f.write(f"Generation {generation}: ")
-    #         f.write(' '.join(map(str, [item for gene in best_chromosome for item in gene])) + '\n')
+    def track_best_chromosome(self):
+        i = np.argmin(self.fitness_scores)
+        current_best_fitness = self.fitness_scores[i]
+        if current_best_fitness < self.best_finess:
+            self.best_finess = current_best_fitness
+            self.best_chromosome = self.chromosomes[i]
 
-    # def load_best_chromosomes(self, filename):
-    #     best_chromosomes = []
-    #
-    #     # Read the best chromosomes from the file
-    #     with open(filename, 'r') as f:
-    #         lines = f.readlines()
-    #
-    #         # Parse each line and extract the chromosomes
-    #         for line in lines:
-    #             if line.strip():  # Skip empty lines
-    #                 parts = line.strip().split(': ')
-    #                 chromosome_data = list(map(int, parts[1].split()))
-    #                 # Reconstruct the chromosome (assuming gene pairs)
-    #                 chromosome = [chromosome_data[i:i + 2] for i in range(0, len(chromosome_data), 2)]
-    #                 best_chromosomes.append(chromosome)
-    #
-    #     return best_chromosomes
+        best_chromosome_index = np.argmin(self.fitness_scores)
+        best_chromosome = self.chromosomes[best_chromosome_index]
+
+    def save_best_chromosome(self, filename):
+        with open(filename, 'w') as f:
+            f.write(f"{len(self.best_chromosome)}\n")
+            for gene in self.best_chromosome:
+                f.write(f"{gene[0]} {gene[1]}\n")
+
+    def load_best_chromosomes(self, filename):
+        with open(filename, 'r') as f:
+            num_control_points = int(f.readline())
+
+            for i in range(num_control_points):
+                x_str, y_str = f.readline().split(" ")
+                x, y = int(x_str), int(y_str)
+                self.best_chromosome.append([x, y])

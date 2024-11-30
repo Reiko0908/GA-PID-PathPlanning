@@ -5,6 +5,7 @@ import sys
 from bezier import *
 from macros import *
 from car import *
+from genetic_model import *
 
 KP = 0.5
 KD = 0.1
@@ -38,5 +39,3 @@ def PID(car, bezier, Kp, Ki, Kd):
     car.angle += steering_angle
     car.angle_to_heading()
     car.position = car.position + CAR_VELOCITY * car.heading / SCREEN_FPS
-
-
