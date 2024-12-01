@@ -46,15 +46,15 @@ if __name__ == "__main__":
     pygame.display.set_caption('Path planning and Trajectory Tracking using Bezier Curve, Genetic Algorithm, Artificial Potential Field and PID Control')
     clock = pygame.time.Clock()
 
-    car = Car("car.png")
+    car = Car("../data/car.png")
     map = Map()
     # map.create_obstacles()
     # map.save_terrain("terrain.txt")
-    map.load_terrain("terrain.txt")
-    map.load_danger_map("danger_map.txt")
+    map.load_terrain("../data/terrain.txt")
+    map.load_danger_map("../data/danger_map.txt")
 
     model = Genetic_model()
-    model.load_best_chromosomes("best_chromosome.txt")
+    model.load_best_chromosomes("../data/best_chromosome.txt")
 
     path = chromosome_to_bezier(model.best_chromosome)
 
