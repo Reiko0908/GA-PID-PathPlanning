@@ -74,8 +74,8 @@ if __name__ == "__main__":
 
         map.game_draw(screen)
         car.game_draw(screen)
+        car.noise(60)
         path.game_draw(screen)
-
         pygame.display.flip()
 
 pygame.quit()

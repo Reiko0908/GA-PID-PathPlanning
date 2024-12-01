@@ -22,9 +22,10 @@ class Car:
     def __init__(self, image_path):
         image = pygame.image.load(image_path)
         self.img = pygame.transform.scale_by(image, CAR_SCALE)
-        self.heading = np.array([1, 0])
+        self.heading = np.array([0, 1])
         self.position = np.array(START_POSITION)
         self.angular_velocity = 0.0
+        self.time = 0
 
     def update(self, omega):
         self.heading = rotate_vect(self.heading, omega)
@@ -40,12 +41,12 @@ class Car:
             image  = pygame.transform.rotate(self.img, angle)
         rect = image.get_rect(center=self.position.tolist())
         screen.blit(image, rect)
+        self.time += 1
 
-    # def angle_to_heading(self):
-    #     angle = np.rad2deg(np.arccos(NORTH @ self.heading))
-    #     self.heading = np.array([np.sin(np.deg2rad(angle)), -np.cos(np.deg2rad(angle))])
-    #     self.heading = self.heading / np.linalg.norm(self.heading)
-    
-    # def limit_to_screen(self):
-    #     self.position[0] = max(0, min(SCREEN_WIDTH, self.position[0]))
-    #     self.position[1] = max(0, min(SCREEN_HEIGHT, self.position[1]))
+    def noise(self, frequency : int):
+        if frequency == 0:
+            return
+        elif self.time % (SCREEN_FPS / frequency) == 0:
+            self.noise_magnitude = np.random.normal(0, np.sqrt(0.035))
+            self.noise_angle = np.deg2rad(np.random.randint(-45, 45))
+            self.position = self.position + self.noise_magnitude*(rotate_vect(self.heading, self.noise_angle))
