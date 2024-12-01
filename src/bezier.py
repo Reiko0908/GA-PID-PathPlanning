@@ -6,13 +6,10 @@ import sys
 
 from macros import *
 
-BEZIER_RESOLUTION = 50
 BEZIER_LOCAL_POINT_COLOR = (0, 0, 255)
 BEZIER_CONTROL_POINT_COLOR = (0, 0, 255)
 BEZIER_SPLINE_COLOR = (72, 61, 139)
 BEZIER_SPLINE_WIDTH = 5
-
-BINARY_SEARCH_STOP_THRESHOLD = 1E-5
 
 class Bezier:
     def __init__(self):

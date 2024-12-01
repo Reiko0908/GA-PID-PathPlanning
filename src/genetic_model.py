@@ -6,13 +6,6 @@ import math
 from macros import *
 from bezier import *
 
-CROSSOVER_RATIO = 0.5
-ELIMINATION_THRESHOLD = 0.25
-MUTATION_RATIO = 0.2
-POPULATION = 200
-CHROMOSOME_INITIAL_LENGTH = 7
-NUM_EPOCH = 100
-
 def chromosome_to_bezier(chromosome):
     bezier = Bezier()
     bezier.control_points= np.array([gene for gene in chromosome])

@@ -5,8 +5,6 @@ import math
 from macros import *
 from bezier import *
 
-CAR_VELOCITY = 200
-CAR_ANGULAR_VELOCITY = 2*np.pi/150
 CAR_SCALE = 0.15
 
 NORTH = np.array([0, -1])
