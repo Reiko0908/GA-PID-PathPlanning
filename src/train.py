@@ -12,7 +12,6 @@ from macros import *
 from bezier import *
 from map import *
 from genetic_model import *
-from PID import *
 
 def plot_3d_terrain(map):
     fig = plt.figure(figsize=(10, 8))

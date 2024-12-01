@@ -5,7 +5,7 @@ import math
 
 from macros import *
 from bezier import *
-
+from macros import *
 def chromosome_to_bezier(chromosome):
     bezier = Bezier()
     bezier.control_points= np.array([gene for gene in chromosome])
