@@ -57,11 +57,11 @@ def plot_bezier(bezier):
 if __name__ == "__main__":
     map = Map()
     # map.create_obstacles()
-    # map.save_terrain("terrain.txt")
-    map.load_terrain("terrain.txt")
+    # map.save_terrain("../data/terrain.txt")
+    map.load_terrain("../data/terrain.txt")
     # map.generate_danger_map()
-    # map.save_danger_map("danger_map.txt")
-    map.load_danger_map("danger_map.txt")
+    # map.save_danger_map("../data/danger_map.txt")
+    map.load_danger_map("../data/danger_map.txt")
     model = Genetic_model()
     model.generate_initial_population() 
 
@@ -79,7 +79,7 @@ if __name__ == "__main__":
         model.crossover()
         model.mutate()
 
-    model.save_best_chromosome("best_chromosome.txt")
+    model.save_best_chromosome("../data/best_chromosome.txt")
 
     plot_bezier(chromosome_to_bezier(model.best_chromosome))
     # plt.plot(range(NUM_EPOCH), model.saved_data)

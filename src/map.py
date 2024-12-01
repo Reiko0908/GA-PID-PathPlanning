@@ -34,21 +34,23 @@ class Map:
 
     def generate_danger_map(self):
         print("Generating danger map")
-        for y in range(SCREEN_HEIGHT):
-            for x in range(SCREEN_WIDTH):
-                danger = 0
-                for obstacle in self.obstacles:
-                    ox, oy = obstacle.position
-                    radius = obstacle.radius
-                    outer_limit = obstacle.radius + 100
-
-                    dist = np.sqrt((x - ox) ** 2 + (y - oy) ** 2)
-                    if dist <= radius:
-                        danger = 1
-                        break 
-                    elif dist <= outer_limit:
-                        danger += 1 - (np.log10(dist - radius) / np.log10(outer_limit - radius))
-                self.danger_map[y, x] = min(danger, 1)
+        y_coords, x_coords = np.meshgrid(range(SCREEN_HEIGHT), range(SCREEN_WIDTH), indexing='ij')
+        danger_map = np.zeros((SCREEN_HEIGHT, SCREEN_WIDTH), dtype=float)
+        
+        for obstacle in self.obstacles:
+            ox, oy = obstacle.position
+            radius = obstacle.radius
+            outer_limit = radius + 100
+            
+            dist = np.sqrt((x_coords - ox) ** 2 + (y_coords - oy) ** 2)
+            
+            fully_dangerous = dist <= radius
+            danger_map[fully_dangerous] = 1
+            
+            within_outer_limit = (dist > radius) & (dist <= outer_limit)
+            danger_map[within_outer_limit] += 1 - (np.log10(dist[within_outer_limit] - radius) / np.log10(outer_limit - radius))
+        
+        self.danger_map = np.minimum(danger_map, 1)
         return self.danger_map
     
     def save_terrain(self, file_name):
