@@ -1,0 +1,13 @@
+\section{Summary and Conclusion}
+This report presented the approach to the solve the two well-known problems: Path Planning and Trajectory Planning by utilizing Genetic Algorithm, Artificial Potential Field, Bezier Curve and PID Controller.
+The Bezier Curve has provided an efficient of way navigation for the simulated vehicle and the PID Controller has successfully guide the car along the generated path from the starting to the ending position.
+However, although the proposed approach has provided a robust way of find and tracking paths but there is still some limitations:
+\begin{itemize}
+  \item We have only tested on static maps, dynamic maps with moving obstacles requires more complex algorithms to make the robot navigate.
+  \item The Bezier Curve with high number of control points (high level Bezier Curve) possess limitations in local control, moving one control point may impact a large portion of the generated curve.
+  As a result, the process of crossover and mutation, which posses large modifications in the shape of the path may produce invalid chromosomes in the latter generation although their parent chromosomes performed astoundingly well with very low fitness score and vice versa.
+  As having mentioned ealier the inheritance property of crossover in Genetic Algorithm will be the key to make the model converge to the solution, and the randomness in mutation will help the model escape from local minima.
+  If the randomness effect out-perform the convergence effect, it would take along time to train the model.
+\end{itemize}
+In sumamry, our project has successfully solve the 2 mentioned problems and could be used as a foundation or research inspiration for other researchers and engineers.
+We hope to develop more complex algorithms, starting from what we have achieved to better the perfomance of robots, vehicles and make them applicable in real-life scenarios.

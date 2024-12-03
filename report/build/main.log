@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.10.2)  3 DEC 2024 22:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.10.2)  3 DEC 2024 23:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -686,7 +686,9 @@ eport\build\theoretical_basis.aux)
 (D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
 eport\build\methodology.aux)
 (D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
-eport\build\reference.aux))
+eport\build\reference.aux)
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\conclusion.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
@@ -777,7 +779,7 @@ Package caption Info: End \AtBeginDocument code.
 \openout2 = `title.aux'.
 
 (title.tex
-<img/hcmut_logo.png, id=126, 431.4519pt x 431.4519pt>
+<img/hcmut_logo.png, id=130, 431.4519pt x 431.4519pt>
 File: img/hcmut_logo.png Graphic file (type png)
 <use img/hcmut_logo.png>
 Package pdftex.def Info: img/hcmut_logo.png  used on input line 23.
@@ -808,12 +810,12 @@ eport\build\main.lof)
 \openout2 = `introduction.aux'.
 
  (introduction.tex
-<img/tesla_cybertruck.jpg, id=213, 421.575pt x 249.93375pt>
+<img/tesla_cybertruck.jpg, id=218, 421.575pt x 249.93375pt>
 File: img/tesla_cybertruck.jpg Graphic file (type jpg)
 <use img/tesla_cybertruck.jpg>
 Package pdftex.def Info: img/tesla_cybertruck.jpg  used on input line 17.
 (pdftex.def)             Requested size: 188.21288pt x 111.58437pt.
-<img/vinfast.jpg, id=214, 1371.1225pt x 770.88pt>
+<img/vinfast.jpg, id=219, 1371.1225pt x 770.88pt>
 File: img/vinfast.jpg Graphic file (type jpg)
 <use img/vinfast.jpg>
 Package pdftex.def Info: img/vinfast.jpg  used on input line 23.
@@ -845,12 +847,12 @@ Package pdftex.def Info: img/hcmut_logo.png  used on input line 8.
 \openout2 = `theoretical_basis.aux'.
 
  (theoretical_basis.tex
-<img/single_lerp.png, id=232, 673.01437pt x 674.52pt>
+<img/single_lerp.png, id=237, 673.01437pt x 674.52pt>
 File: img/single_lerp.png Graphic file (type png)
 <use img/single_lerp.png>
 Package pdftex.def Info: img/single_lerp.png  used on input line 13.
 (pdftex.def)             Requested size: 167.2989pt x 167.6724pt.
-<img/general_bezier.png, id=233, 2569.6pt x 1071.00125pt>
+<img/general_bezier.png, id=238, 2569.6pt x 1071.00125pt>
 File: img/general_bezier.png Graphic file (type png)
 <use img/general_bezier.png>
 Package pdftex.def Info: img/general_bezier.png  used on input line 36.
@@ -868,12 +870,12 @@ Package pdftex.def Info: img/hcmut_logo.png  used on input line 44.
 
 
  <./img/single_lerp.png>]
-<img/quadratic_bezier.png, id=246, 2569.6pt x 1071.00125pt>
+<img/quadratic_bezier.png, id=251, 2569.6pt x 1071.00125pt>
 File: img/quadratic_bezier.png Graphic file (type png)
 <use img/quadratic_bezier.png>
 Package pdftex.def Info: img/quadratic_bezier.png  used on input line 50.
 (pdftex.def)             Requested size: 188.21288pt x 78.44228pt.
-<img/cubic_bezier.png, id=247, 2569.6pt x 1071.00125pt>
+<img/cubic_bezier.png, id=252, 2569.6pt x 1071.00125pt>
 File: img/cubic_bezier.png Graphic file (type png)
 <use img/cubic_bezier.png>
 Package pdftex.def Info: img/cubic_bezier.png  used on input line 56.
@@ -884,12 +886,12 @@ Package pdftex.def Info: img/hcmut_logo.png  used on input line 90.
 (pdftex.def)             Requested size: 22.75887pt x 22.75887pt.
  [6 <./img/general_bezier.png> <./img/quadratic_bezier.png> <./img/cubic_bezier
 .png>]
-<img/proportional_control.png, id=258, 1505.625pt x 738.76pt>
+<img/proportional_control.png, id=263, 1505.625pt x 738.76pt>
 File: img/proportional_control.png Graphic file (type png)
 <use img/proportional_control.png>
 Package pdftex.def Info: img/proportional_control.png  used on input line 101.
 (pdftex.def)             Requested size: 278.5571pt x 136.67972pt.
-<img/offset.png, id=259, 702.625pt x 468.75125pt>
+<img/offset.png, id=264, 702.625pt x 468.75125pt>
 File: img/offset.png Graphic file (type png)
 <use img/offset.png>
 Package pdftex.def Info: img/offset.png  used on input line 109.
@@ -899,37 +901,37 @@ File: img/hcmut_logo.png Graphic file (type png)
 Package pdftex.def Info: img/hcmut_logo.png  used on input line 115.
 (pdftex.def)             Requested size: 22.75887pt x 22.75887pt.
  [7 <./img/proportional_control.png> <./img/offset.png>]
-<img/integral_low.png, id=267, 469.755pt x 216.81pt>
+<img/integral_low.png, id=272, 469.755pt x 216.81pt>
 File: img/integral_low.png Graphic file (type png)
 <use img/integral_low.png>
 Package pdftex.def Info: img/integral_low.png  used on input line 121.
 (pdftex.def)             Requested size: 125.47737pt x 57.9109pt.
-<img/integral_ideal.png, id=268, 469.755pt x 228.10219pt>
+<img/integral_ideal.png, id=273, 469.755pt x 228.10219pt>
 File: img/integral_ideal.png Graphic file (type png)
 <use img/integral_ideal.png>
 Package pdftex.def Info: img/integral_ideal.png  used on input line 126.
 (pdftex.def)             Requested size: 125.47737pt x 60.9271pt.
-<img/integral_high.png, id=269, 469.755pt x 224.33812pt>
+<img/integral_high.png, id=274, 469.755pt x 224.33812pt>
 File: img/integral_high.png Graphic file (type png)
 <use img/integral_high.png>
 Package pdftex.def Info: img/integral_high.png  used on input line 131.
 (pdftex.def)             Requested size: 125.47737pt x 59.9217pt.
-<img/derivative_low.png, id=270, 467.49657pt x 223.58531pt>
+<img/derivative_low.png, id=275, 467.49657pt x 223.58531pt>
 File: img/derivative_low.png Graphic file (type png)
 <use img/derivative_low.png>
 Package pdftex.def Info: img/derivative_low.png  used on input line 145.
 (pdftex.def)             Requested size: 125.47737pt x 60.0106pt.
-<img/derivative_ideal.png, id=271, 467.49657pt x 225.09094pt>
+<img/derivative_ideal.png, id=276, 467.49657pt x 225.09094pt>
 File: img/derivative_ideal.png Graphic file (type png)
 <use img/derivative_ideal.png>
 Package pdftex.def Info: img/derivative_ideal.png  used on input line 149.
 (pdftex.def)             Requested size: 125.47737pt x 60.41472pt.
-<img/derivative_high.png, id=272, 467.49657pt x 227.34938pt>
+<img/derivative_high.png, id=277, 467.49657pt x 227.34938pt>
 File: img/derivative_high.png Graphic file (type png)
 <use img/derivative_high.png>
 Package pdftex.def Info: img/derivative_high.png  used on input line 153.
 (pdftex.def)             Requested size: 125.47737pt x 61.02089pt.
-<img/full_pid.png, id=273, 531.9875pt x 456.70625pt>
+<img/full_pid.png, id=278, 531.9875pt x 456.70625pt>
 File: img/full_pid.png Graphic file (type png)
 <use img/full_pid.png>
 Package pdftex.def Info: img/full_pid.png  used on input line 165.
@@ -945,17 +947,17 @@ gh.png>]
 Package wrapfig Warning: Collision between wrapping environments on input line 
 178.
 
-<img/apf_example.jpg, id=285, 649.42625pt x 337.26pt>
+<img/apf_example.jpg, id=290, 649.42625pt x 337.26pt>
 File: img/apf_example.jpg Graphic file (type jpg)
 <use img/apf_example.jpg>
 Package pdftex.def Info: img/apf_example.jpg  used on input line 181.
 (pdftex.def)             Requested size: 167.2989pt x 86.87758pt.
-<img/ga_example.png, id=286, 301.125pt x 196.735pt>
+<img/ga_example.png, id=291, 301.125pt x 196.735pt>
 File: img/ga_example.png Graphic file (type png)
 <use img/ga_example.png>
 Package pdftex.def Info: img/ga_example.png  used on input line 192.
 (pdftex.def)             Requested size: 188.21288pt x 122.97105pt.
-<img/escaping_the_local_minima.png, id=287, 853.1875pt x 495.8525pt>
+<img/escaping_the_local_minima.png, id=292, 853.1875pt x 495.8525pt>
 File: img/escaping_the_local_minima.png Graphic file (type png)
 <use img/escaping_the_local_minima.png>
 Package pdftex.def Info: img/escaping_the_local_minima.png  used on input line 
@@ -966,205 +968,14 @@ File: img/hcmut_logo.png Graphic file (type png)
 Package pdftex.def Info: img/hcmut_logo.png  used on input line 201.
 (pdftex.def)             Requested size: 22.75887pt x 22.75887pt.
 [9 <./img/full_pid.png> <./img/apf_example.jpg>]
-<img/gaussian_distribution.png, id=294, 376.40625pt x 188.705pt>
+<img/gaussian_distribution.png, id=299, 376.40625pt x 188.705pt>
 File: img/gaussian_distribution.png Graphic file (type png)
 <use img/gaussian_distribution.png>
 Package pdftex.def Info: img/gaussian_distribution.png  used on input line 208.
 
 (pdftex.def)             Requested size: 146.39133pt x 73.39308pt.
-<img/binary_search.png, id=295, 1204.5pt x 426.59375pt>
+<img/binary_search.png, id=300, 1204.5pt x 426.59375pt>
 File: img/binary_search.png Graphic file (type png)
 <use img/binary_search.png>
 Package pdftex.def Info: img/binary_search.png  used on input line 220.
 (pdftex.def)             Requested size: 230.04079pt x 81.47025pt.
-)
-File: img/hcmut_logo.png Graphic file (type png)
-<use img/hcmut_logo.png>
-Package pdftex.def Info: img/hcmut_logo.png  used on input line 9.
-(pdftex.def)             Requested size: 22.75887pt x 22.75887pt.
- [10 <./img/ga_example.png> <./img/escaping_the_local_minima.png> <./img/gaussi
-an_distribution.png> <./img/binary_search.png>]
-\openout2 = `methodology.aux'.
-
- (methodology.tex
-<img/chromosome_encoding.jpg, id=305, 1510.64375pt x 973.6375pt>
-File: img/chromosome_encoding.jpg Graphic file (type jpg)
-<use img/chromosome_encoding.jpg>
-Package pdftex.def Info: img/chromosome_encoding.jpg  used on input line 23.
-(pdftex.def)             Requested size: 334.60422pt x 215.65685pt.
-File: img/hcmut_logo.png Graphic file (type png)
-<use img/hcmut_logo.png>
-Package pdftex.def Info: img/hcmut_logo.png  used on input line 26.
-(pdftex.def)             Requested size: 22.75887pt x 22.75887pt.
- [11
-
-
-
-]
-File: img/hcmut_logo.png Graphic file (type png)
-<use img/hcmut_logo.png>
-Package pdftex.def Info: img/hcmut_logo.png  used on input line 51.
-(pdftex.def)             Requested size: 22.75887pt x 22.75887pt.
- [12 <./img/chromosome_encoding.jpg>]
-File: img/hcmut_logo.png Graphic file (type png)
-<use img/hcmut_logo.png>
-Package pdftex.def Info: img/hcmut_logo.png  used on input line 84.
-(pdftex.def)             Requested size: 22.75887pt x 22.75887pt.
-
-[13]
-<img/crossover.png, id=331, 466.74374pt x 173.14688pt>
-File: img/crossover.png Graphic file (type png)
-<use img/crossover.png>
-Package pdftex.def Info: img/crossover.png  used on input line 92.
-(pdftex.def)             Requested size: 334.60422pt x 124.13196pt.
-<img/add_gene.png, id=332, 503.63156pt x 120.45pt>
-File: img/add_gene.png Graphic file (type png)
-<use img/add_gene.png>
-Package pdftex.def Info: img/add_gene.png  used on input line 100.
-(pdftex.def)             Requested size: 292.77629pt x 70.02094pt.
-<img/remove_gene.png, id=333, 451.6875pt x 112.92188pt>
-File: img/remove_gene.png Graphic file (type png)
-<use img/remove_gene.png>
-Package pdftex.def Info: img/remove_gene.png  used on input line 106.
-(pdftex.def)             Requested size: 292.77629pt x 73.19846pt.
-File: img/hcmut_logo.png Graphic file (type png)
-<use img/hcmut_logo.png>
-Package pdftex.def Info: img/hcmut_logo.png  used on input line 108.
-(pdftex.def)             Requested size: 22.75887pt x 22.75887pt.
- [14 <./img/crossover.png> <./img/add_gene.png>]
-<img/edit_gene.png, id=345, 470.50781pt x 105.39375pt>
-File: img/edit_gene.png Graphic file (type png)
-<use img/edit_gene.png>
-Package pdftex.def Info: img/edit_gene.png  used on input line 112.
-(pdftex.def)             Requested size: 292.77629pt x 65.58145pt.
-<img/genetic_model.png, id=346, 721.69624pt x 807.015pt>
-File: img/genetic_model.png Graphic file (type png)
-<use img/genetic_model.png>
-Package pdftex.def Info: img/genetic_model.png  used on input line 120.
-(pdftex.def)             Requested size: 230.04079pt x 257.22801pt.
-File: img/hcmut_logo.png Graphic file (type png)
-<use img/hcmut_logo.png>
-Package pdftex.def Info: img/hcmut_logo.png  used on input line 127.
-(pdftex.def)             Requested size: 22.75887pt x 22.75887pt.
- [15 <./img/remove_gene.png> <./img/edit_gene.png> <./img/genetic_model.png>]
-File: img/hcmut_logo.png Graphic file (type png)
-<use img/hcmut_logo.png>
-Package pdftex.def Info: img/hcmut_logo.png  used on input line 167.
-(pdftex.def)             Requested size: 22.75887pt x 22.75887pt.
- [16]
-
-methodology.tex:187: LaTeX Error: Bad math environment delimiter.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.187 ...} = \underset{t\in\mathbf{t}}{\arg\min}\(
-                                                  \left\lVert B(t) - K \righ...
-
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-methodology.tex:187: LaTeX Error: Bad math environment delimiter.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.187 ...min}\(\left\lVert B(t) - K \right\rVert\)
-                                                  $$
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-File: img/hcmut_logo.png Graphic file (type png)
-<use img/hcmut_logo.png>
-Package pdftex.def Info: img/hcmut_logo.png  used on input line 196.
-(pdftex.def)             Requested size: 22.75887pt x 22.75887pt.
-[17]
-Underfull \hbox (badness 10000) in paragraph at lines 223--224
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 224--225
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 225--226
-
- []
-
-File: img/hcmut_logo.png Graphic file (type png)
-<use img/hcmut_logo.png>
-Package pdftex.def Info: img/hcmut_logo.png  used on input line 226.
-(pdftex.def)             Requested size: 22.75887pt x 22.75887pt.
-[18]
-Underfull \hbox (badness 10000) in paragraph at lines 227--228
-
- []
-
-)
-File: img/hcmut_logo.png Graphic file (type png)
-<use img/hcmut_logo.png>
-Package pdftex.def Info: img/hcmut_logo.png  used on input line 10.
-(pdftex.def)             Requested size: 22.75887pt x 22.75887pt.
- [19]
-\openout2 = `reference.aux'.
-
- (reference.tex) 
-enddocument/afterlastpage: lastpage setting LastPage.
-
-(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
-eport\build\main.aux
-(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
-eport\build\title.aux)
-(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
-eport\build\introduction.aux)
-(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
-eport\build\project_summary.aux)
-(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
-eport\build\theoretical_basis.aux)
-(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
-eport\build\methodology.aux)
-(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
-eport\build\reference.aux))
- ***********
-LaTeX2e <2023-11-01> patch level 1
-L3 programming layer <2024-01-04>
- ***********
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 8B3BE318CFBB1FF4F9B0E957A3B9C3FF;4838.
- ) 
-Here is how much of TeX's memory you used:
- 23431 strings out of 474485
- 444939 string characters out of 5755928
- 1939542 words of memory out of 5000000
- 45207 multiletter control sequences out of 15000+600000
- 565220 words of font info for 61 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 117i,25n,121p,643b,578s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\Admin\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
-1095.pk><D:/Software/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><D:/Softw
-are/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><D:/Software/MiKTeX/fonts/
-type1/public/amsfonts/cm/cmbx6.pfb><D:/Software/MiKTeX/fonts/type1/public/amsfo
-nts/cm/cmbx8.pfb><D:/Software/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb>
-<D:/Software/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/Software/MiKT
-eX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Software/MiKTeX/fonts/type1/pub
-lic/amsfonts/cm/cmmi8.pfb><D:/Software/MiKTeX/fonts/type1/public/amsfonts/cm/cm
-r10.pfb><D:/Software/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><D:/Softwar
-e/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><D:/Software/MiKTeX/fonts/type
-1/public/amsfonts/cm/cmsy10.pfb><D:/Software/MiKTeX/fonts/type1/public/amsfonts
-/cm/cmsy6.pfb><D:/Software/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><D:/
-Software/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><D:/Software/MiKTeX/f
-onts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLA
-NNING-ALGORITHM\report\build\main.pdf (20 pages, 1720013 bytes).
-PDF statistics:
- 484 PDF objects out of 1000 (max. 8388607)
- 98 named destinations out of 1000 (max. 500000)
- 388 words of extra memory for PDF output out of 10000 (max. 10000000)
-
