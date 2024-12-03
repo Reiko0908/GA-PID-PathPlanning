@@ -1,8 +1,6 @@
 This is BibTeX, Version 0.99d
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
-Reallocating 'name_of_file' (item size: 1) to 9 items.
-The style file: abbrvnat.bst
 Reallocating 'name_of_file' (item size: 1) to 10 items.
 A level-1 auxiliary file: title.aux
 Reallocating 'name_of_file' (item size: 1) to 17 items.
@@ -13,70 +11,56 @@ Reallocating 'name_of_file' (item size: 1) to 22 items.
 A level-1 auxiliary file: theoretical_basis.aux
 Reallocating 'name_of_file' (item size: 1) to 16 items.
 A level-1 auxiliary file: methodology.aux
-Reallocating 'name_of_file' (item size: 1) to 14 items.
-A level-1 auxiliary file: reference.aux
-Reallocating 'name_of_file' (item size: 1) to 5 items.
+Reallocating 'name_of_file' (item size: 1) to 12 items.
+A level-1 auxiliary file: results.aux
 Reallocating 'name_of_file' (item size: 1) to 15 items.
 A level-1 auxiliary file: conclusion.aux
+Reallocating 'name_of_file' (item size: 1) to 14 items.
+A level-1 auxiliary file: reference.aux
+Reallocating 'name_of_file' (item size: 1) to 6 items.
+The style file: plain.bst
+Reallocating 'name_of_file' (item size: 1) to 5 items.
+I found no \citation commands---while reading file main.aux
 Database file #1: refs.bib
-Warning--entry type for "ref7" isn't style-file defined
---line 111 of file refs.bib
-Warning--I didn't find a database entry for "ref6"
-Too many commas in name 1 of "Ling Zheng, Pengyun Zeng, Wei Yang, Yinong Li, Zhenfei Zhan" for entry ref2
-while executing---line 1347 of file abbrvnat.bst
-Too many commas in name 1 of "Ling Zheng, Pengyun Zeng, Wei Yang, Yinong Li, Zhenfei Zhan" for entry ref2
-while executing---line 1347 of file abbrvnat.bst
-Too many commas in name 1 of "Ling Zheng, Pengyun Zeng, Wei Yang, Yinong Li, Zhenfei Zhan" for entry ref2
-while executing---line 1347 of file abbrvnat.bst
-Too many commas in name 1 of "Ling Zheng, Pengyun Zeng, Wei Yang, Yinong Li, Zhenfei Zhan" for entry ref2
-while executing---line 1347 of file abbrvnat.bst
-Too many commas in name 1 of "Ling Zheng, Pengyun Zeng, Wei Yang, Yinong Li, Zhenfei Zhan" for entry ref2
-while executing---line 1429 of file abbrvnat.bst
-Too many commas in name 1 of "Ling Zheng, Pengyun Zeng, Wei Yang, Yinong Li, Zhenfei Zhan" for entry ref2
-while executing---line 1429 of file abbrvnat.bst
-Too many commas in name 1 of "Ling Zheng, Pengyun Zeng, Wei Yang, Yinong Li, Zhenfei Zhan" for entry ref2
-while executing---line 1429 of file abbrvnat.bst
-Too many commas in name 1 of "Ling Zheng, Pengyun Zeng, Wei Yang, Yinong Li, Zhenfei Zhan" for entry ref2
-while executing---line 1429 of file abbrvnat.bst
-You've used 6 entries,
-            2773 wiz_defined-function locations,
-            638 strings with 5759 characters,
-and the built_in function-call counts, 2413 in all, are:
-= -- 224
-> -- 71
-< -- 7
-+ -- 28
-- -- 21
-* -- 156
-:= -- 364
-add.period$ -- 19
-call.type$ -- 6
-change.case$ -- 25
-chr.to.int$ -- 5
-cite$ -- 12
-duplicate$ -- 127
-empty$ -- 241
-format.name$ -- 29
-if$ -- 524
-int.to.chr$ -- 2
-int.to.str$ -- 1
-missing$ -- 5
-newline$ -- 38
-num.names$ -- 24
-pop$ -- 53
+You've used 0 entries,
+            2118 wiz_defined-function locations,
+            505 strings with 4103 characters,
+and the built_in function-call counts, 18 in all, are:
+= -- 0
+> -- 0
+< -- 0
++ -- 0
+- -- 0
+* -- 2
+:= -- 7
+add.period$ -- 0
+call.type$ -- 0
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 0
+duplicate$ -- 0
+empty$ -- 1
+format.name$ -- 0
+if$ -- 1
+int.to.chr$ -- 0
+int.to.str$ -- 0
+missing$ -- 0
+newline$ -- 3
+num.names$ -- 0
+pop$ -- 0
 preamble$ -- 1
-purify$ -- 19
+purify$ -- 0
 quote$ -- 0
-skip$ -- 91
+skip$ -- 1
 stack$ -- 0
-substring$ -- 127
-swap$ -- 17
-text.length$ -- 1
+substring$ -- 0
+swap$ -- 0
+text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 66
+type$ -- 0
 warning$ -- 0
-while$ -- 23
+while$ -- 0
 width$ -- 0
-write$ -- 86
-(There were 8 error messages)
+write$ -- 2
+(There was 1 error message)
