@@ -59,7 +59,7 @@ class Genetic_model:
         sorted_indices = np.argsort(self.fitness_scores)  
         # self.saved_data.append(self.fitness_scores[sorted_indices[0]])
         i = 0
-        while(self.fitness_scores[sorted_indices[i]] < ELIMINATION_THRESHOLD):
+        while(self.fitness_scores[sorted_indices[i]] < SEPERATION_THRESHOLD):
             i += 1
         self.elite_indices = sorted_indices[:i]
         self.non_elite_indices = sorted_indices[i:] 
