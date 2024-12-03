@@ -13,7 +13,7 @@
 \contentsline {figure}{\numberline {13}{\ignorespaces Binary Search Visualization}}{10}{figure.caption.18}%
 \contentsline {figure}{\numberline {14}{\ignorespaces Chromosome Encoding Strategy}}{12}{figure.caption.19}%
 \contentsline {figure}{\numberline {15}{\ignorespaces Crossover mechanism}}{14}{figure.caption.22}%
-\contentsline {figure}{\numberline {16}{\ignorespaces Mutate add gene}}{14}{figure.caption.24}%
-\contentsline {figure}{\numberline {17}{\ignorespaces Mutate remove gene}}{15}{figure.caption.25}%
-\contentsline {figure}{\numberline {18}{\ignorespaces Mutate edit gene}}{15}{figure.caption.26}%
-\contentsline {figure}{\numberline {19}{\ignorespaces Algorithm Workflow}}{16}{figure.caption.27}%
+\contentsline {figure}{\numberline {16}{\ignorespaces Add gene}}{14}{figure.caption.24}%
+\contentsline {figure}{\numberline {17}{\ignorespaces Remove gene}}{15}{figure.caption.25}%
+\contentsline {figure}{\numberline {18}{\ignorespaces Edit gene}}{15}{figure.caption.26}%
+\contentsline {figure}{\numberline {19}{\ignorespaces Algorithm Workflow}}{15}{figure.caption.27}%
