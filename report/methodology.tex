@@ -97,27 +97,27 @@ After that, the genes behind the crossover position of the 2 parental chromosome
   There are three types of mutation going to be used: add gene, remove gene and edit gene. The mutation process will be conducted only on a small proportion named Mutation Ratio $R_M$ of the non-elite chromosomes. The mutation position will also be randomized.
   \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{add_gene.png}
-    \caption{Mutate add gene}
+    \includegraphics[width=0.7\textwidth]{add_gene.png}
+    \caption{Add gene}
   \end{figure}
   The additional gene will be randomized in the scope of the map size
   \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{remove_gene.png}
-    \caption{Mutate remove gene}
+    \includegraphics[width=0.7\textwidth]{remove_gene.png}
+    \caption{Remove gene}
   \end{figure}
   Randomly select a gene to be removed from the chromosome
   \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{edit_gene.png}
-    \caption{Mutate edit gene}
+    \includegraphics[width=0.7\textwidth]{edit_gene.png}
+    \caption{Edit gene}
   \end{figure}
   The chosen gene will be re-randomized in the scope of the map size.
 
   \subsubsection{Overal Algorithm Workflow}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{genetic_model.png}
+    \includegraphics[width=0.55\textwidth]{genetic_model.png}
     \caption{Algorithm Workflow}
   \end{figure}
 
@@ -181,11 +181,10 @@ After that, the genes behind the crossover position of the 2 parental chromosome
       \item \textbf{Convert chromosome to Bézier path:} Convert the saved chromosome into Bezier Path.
     \end{itemize}
     \subsubsection{Control loop}
-
     \subsubsection*{Find projection}
+    Determining the projection of a point on the Bezier Curve is the back bone principle of our PID control flow.
+
     \subsubsection*{Calculate error}
     \subsubsection*{Calculate PID}
-    
+
     \subsubsection*{Update vehicle}
-
-
