@@ -226,6 +226,8 @@ INPUT D:\Software\MiKTeX\tex\latex\amsmath\amsgen.sty
 INPUT D:\Software\MiKTeX\tex\latex\amsmath\amsbsy.sty
 INPUT D:\Software\MiKTeX\tex\latex\amsmath\amsbsy.sty
 INPUT D:\Software\MiKTeX\tex\latex\amsmath\amsopn.sty
+INPUT D:\Software\MiKTeX\tex\latex\cite\cite.sty
+INPUT D:\Software\MiKTeX\tex\latex\cite\cite.sty
 INPUT D:\Software\MiKTeX\tex\latex\caption\caption.sty
 INPUT D:\Software\MiKTeX\tex\latex\caption\caption.sty
 INPUT D:\Software\MiKTeX\tex\latex\caption\caption3.sty
@@ -234,8 +236,10 @@ INPUT D:\Software\MiKTeX\tex\latex\caption\subcaption.sty
 INPUT D:\Software\MiKTeX\tex\latex\caption\subcaption.sty
 INPUT D:\Software\MiKTeX\tex\latex\wrapfig\wrapfig.sty
 INPUT D:\Software\MiKTeX\tex\latex\wrapfig\wrapfig.sty
-INPUT D:\Software\MiKTeX\tex\latex\cite\cite.sty
-INPUT D:\Software\MiKTeX\tex\latex\cite\cite.sty
+INPUT D:\Software\MiKTeX\tex\latex\tocbibind\tocbibind.sty
+INPUT D:\Software\MiKTeX\tex\latex\tocbibind\tocbibind.sty
+INPUT D:\Software\MiKTeX\tex\latex\natbib\natbib.sty
+INPUT D:\Software\MiKTeX\tex\latex\natbib\natbib.sty
 INPUT D:\Software\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
 INPUT D:\Software\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
 INPUT D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\report\build\main.aux
@@ -592,6 +596,14 @@ OUTPUT D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORI
 INPUT .\reference.tex
 INPUT .\reference.tex
 INPUT reference.tex
+INPUT D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\report\build\main.bbl
+INPUT D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\report\build\main.bbl
+INPUT D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\report\build\main.bbl
+INPUT D:\Software\MiKTeX\fonts\tfm\public\cm\cmti10.tfm
+INPUT .\img\hcmut_logo.png
+INPUT .\img\hcmut_logo.png
+INPUT .\img\hcmut_logo.png
+INPUT .\img\hcmut_logo.png
 INPUT .\conclusion.tex
 INPUT .\conclusion.tex
 INPUT .\img\hcmut_logo.png
@@ -658,6 +670,8 @@ INPUT D:\Software\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy6.pfb
 INPUT D:\Software\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy6.pfb
 INPUT D:\Software\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy8.pfb
 INPUT D:\Software\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy8.pfb
+INPUT D:\Software\MiKTeX\fonts\type1\public\amsfonts\cm\cmti10.pfb
+INPUT D:\Software\MiKTeX\fonts\type1\public\amsfonts\cm\cmti10.pfb
 INPUT D:\Software\MiKTeX\fonts\type1\public\amsfonts\cm\cmtt10.pfb
 INPUT D:\Software\MiKTeX\fonts\type1\public\amsfonts\cm\cmtt10.pfb
 INPUT D:\Software\MiKTeX\fonts\type1\public\amsfonts\cm\cmtt8.pfb
