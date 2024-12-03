@@ -27,6 +27,7 @@ class Car:
 
     def update(self, omega):
         self.heading = rotate_vect(self.heading, omega)
+        print(omega)
         self.position = self.position + self.heading * CAR_VELOCITY / SCREEN_FPS
         self.heading = self.heading /np.linalg.norm(self.heading)
 
