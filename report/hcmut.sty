@@ -1,0 +1,56 @@
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref} % for references
+\usepackage{tikz} % for title page border
+\usetikzlibrary{calc,arrows,backgrounds}
+\usepackage{geometry} % for page layout
+\usepackage{fancyhdr} % for header and footer
+\usepackage{lastpage} % for last page
+\usepackage{tocloft} % for the dots in table of contents
+\usepackage{float} % H options for figures
+% \usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{cite} % for reference and bibliography
+
+% \usepackage{lastpage} % for page numbering
+
+
+\graphicspath{{img/}}
+\hypersetup{urlcolor=blue,linkcolor=black,citecolor=black,colorlinks=true} % Getting rid of all the red boundings of the hyperref
+% used to remove the bottom white space under every wrapfig
+\setlength{\intextsep}{5pt}%
+
+
+% HEADER AND FOOTER
+\pagestyle{fancy}
+\fancyhead{}
+\setlength{\headheight}{28.2pt}
+\fancyhead[L]{
+  \begin{tabular}{rl}
+    \begin{picture}(25,12.5)(0,0)
+      \put(0,-8){\includegraphics[width=8mm, height=8mm]{img/hcmut_logo.png}}
+    \end{picture}
+
+    \begin{tabular}{l}
+      \textbf{\bf \ttfamily Ho Chi Minh City University of Technology}\\
+      \textbf{\bf \ttfamily Falcuty of Applied Science}
+    \end{tabular} 	
+  \end{tabular}
+}
+
+\fancyfoot{} 
+\fancyfoot[L]{\scriptsize \ttfamily Group 01, CC07, Calculus 1, Semester 241}
+\fancyfoot[R]{\scriptsize \ttfamily Page {\thepage}/\pageref{LastPage}}
+% \fancyfoot[R]{\scriptsize \ttfamily Page {\thepage}}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+% TABLE OF CONTENTS
+\renewcommand{\tocloftpagestyle}{plain}
+\cftsetpnumwidth{0.5cm}
+\renewcommand{\cftsecdotsep}{\cftdotsep}
+\renewcommand{\cftsecleader}{\normalfont\cftdotfill{\cftsecdotsep}}
+\endinput 

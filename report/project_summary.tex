@@ -1,0 +1,26 @@
+\section{Project Summary}
+This project presents an advanced path planning and trajectory tracking system aimed at optimizing navigation in complex environments. The system generates smooth, efficient paths while ensuring safe navigation through obstacle avoidance. It also tracks trajectories with high accuracy, ensuring the system follows the planned path precisely
+  \subsection*{Path Planning}
+  \begin{itemize}
+    \item \textbf{Bézier Curve:} Used to generate smooth and continuous paths, ensuring feasibility in constrained environments.
+    \item \textbf{Artificial Potential Fields (APF):} For local obstacle avoidance by generating a recursive danger map that reflects obstacles and their danger level, guiding the system to avoid collisions.
+    \item \textbf{Genetic Algoritm (GA):}  Inspired by natural selection. The algorithm evaluates multiple possible paths, selects the most efficient ones based on fitness criteria, and evolves the best path through successive generations.
+  \end{itemize}
+
+  \subsection*{Trajectory Tracking}
+  \begin{itemize}
+    \item \textbf{PID Controller:} Ensures accurate following of planned paths, making real-time adjustments to minimize deviations due to environmental disturbances or system dynamics.
+    \item \textbf{Normal Distribution:} Introduces noise into the system, closely mimicking real-world conditions and enabling the algorithm to adapt to unpredictable variations in vehicle performance and environmental factors.
+    \item \textbf{Binary Search}: Algorithm used to find the projection of a point on the Bezier Curve.
+      It is the key algorithm to support the PID Controller, helping the car stays on track along the path.
+      It also helps the Genetic model validate the feasibility of the Bezier path.
+  \end{itemize}
+  \subsection*{Tools and Libraries}
+  \begin{itemize}
+    \item Python programming language
+    \item numpy library
+    \item Pygame library
+    \item Matplotlib library
+    \item Object-oriented Programming
+  \end{itemize}
+
