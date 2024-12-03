@@ -73,9 +73,9 @@ if __name__ == "__main__":
         omega = pid(car, path)
 
         map.game_draw(screen)
+        path.game_draw(screen)
         car.game_draw(screen)
         car.noise(SCREEN_FPS)
-        path.game_draw(screen)
         pygame.display.flip()
 
 pygame.quit()
