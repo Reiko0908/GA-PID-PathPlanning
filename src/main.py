@@ -11,9 +11,9 @@ from genetic_model import *
 from bezier import *
 from macros import *
 
-KP = 0.005
-KI = 0.000001
-KD = 0.00003
+KP = 0.0055
+KI = 0.0000015
+KD = 0.000035
 
 def pid(car, bezier):
     if not hasattr(pid, 'integral_term'):
@@ -75,7 +75,7 @@ if __name__ == "__main__":
         map.game_draw(screen)
         path.game_draw(screen)
         car.game_draw(screen)
-        car.noise(SCREEN_FPS)
+        car.noise(5)
         pygame.display.flip()
 
 pygame.quit()
