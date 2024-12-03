@@ -192,6 +192,8 @@ After that, the genes behind the crossover position of the 2 parental chromosome
       \item \textbf{Integral (I):} Addressing the accumulation of past errors. It is designed to eliminate steady-state errors that cannot be corrected by the proportional term alone.\\
         $$I_{term} = K_I \cdot \int_{0}^{t} Y_{err} \, dt$$
       \item \textbf{Derivative(D):} Predicting the future behavior of the error by considering its rate of change. This term helps to dampen oscillations and improve stability.\\
-        $$D_{term} = K_D\cdot\frac{d Y_{err}}{dt}$$    
+        $$D_{term} = K_D\cdot\frac{d Y_{err}}{dt}$$   
+      \item \textbf{Correction Factor ($$\omega_{\text{pid}}$$):} Minimizing deviations from a desired target or setpoint.
+        $$\omega_{\text{pid}} = K_P \cdot Y_{\text{err}} + K_I \cdot \int_{0}^{t} Y_{\text{err}} \, dt + K_D \cdot \frac{dY_{\text{err}}}{dt}$$
     \end{itemize}
     \subsubsection*{Update vehicle}
