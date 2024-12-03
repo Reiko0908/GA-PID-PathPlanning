@@ -183,7 +183,8 @@ After that, the genes behind the crossover position of the 2 parental chromosome
     \subsubsection{Control loop}
     \subsubsection*{Find projection}
     Determining the projection of a point on the Bezier Curve is the back bone principle of our PID control flow.
-
+    Firstly, to minimize the computing time, we need to find a good starting point on the curve before performing the Binary Search algorithm by iterating over $N_{bres}$ $t$ values in $\mathbf{t}$ to find the closest point.
+    $$$$
     \subsubsection*{Calculate error}
     \subsubsection*{Calculate PID}
     \subsubsection*{Update vehicle}
