@@ -202,7 +202,7 @@ After that, the genes behind the crossover position of the 2 parental chromosome
         \begin{itemize}
           \item $t_{right} = t_{mid}$ and keep $t_{left}$ the same if $d_1<d_2$
           \item $t_{left} = t_{mid}$ and keep $t_{right}$ the same if $d_1\neq d_2$
-        \end{center}
+        \end{itemize}
       \item Update $t_{mid} = \frac{t_{left} + t_{right}}{2}$
       \item Check termination condition and repeat step 1 if not satisfied.\\
         The we define a Termination Threshold $T_{BS}$ if $t_{right}-t_{left} \leq T_{BS}$ then the algorithm will yield the result $B(t_{mid})$
