@@ -194,8 +194,8 @@ After that, the genes behind the crossover position of the 2 parental chromosome
     \begin{enumerate}
       \item Calculating the distance between K and the two middle points of the intervals $[t_{left};t_{mid}]$ and $[t_{mid};t_{right}]$
         \begin{center}
-          $d_1 = \left\lVert B\left(\frac{t_{left}+t_{mid}}{2}\rigth)-K \right\rVert$ and 
-          $d_2 = \left\lVert B\left(\frac{t_{mid}+t_{right}}{2}\rigth)-K \right\rVert$ 
+          $d_1 = \left\lVert B\left(\frac{t_{left}+t_{mid}}{2}\right)-K \right\rVert$ and 
+          $d_2 = \left\lVert B\left(\frac{t_{mid}+t_{right}}{2}\right)-K \right\rVert$ 
         \end{center}
       \item Compare $d_1$ and $d_2$ to detemine which interval does the answer lies in
       \item Ignore the interval that doesn't have the answer then update the left and right boundaries by assigning new values to $t_{left}$ and $t_{right}$
@@ -208,8 +208,15 @@ After that, the genes behind the crossover position of the 2 parental chromosome
         The we define a Termination Threshold $T_{BS}$ if $t_{right}-t_{left} \leq T_{BS}$ then the algorithm will yield the result $B(t_{mid})$
     \end{enumerate}
     
-
     \subsubsection*{Calculate error}
+    To steer the vehicle along the generated path, we first need to calculate it's position one step a head.
+    \begin{enumerate}
+      \item We define point $Z$ be the predicted position of the car by calculating it's state using current calulcated data in the loop.
+      \item Then we find the projection $P$ of $Z$ on the Bezier Curve.
+      \item Then we calculate the error $Y_{err}$, which we will be using for the PID control.
+      $$Y_{err}=(\vec{u}\times\vec{ZP})\cdot\left\lVert Z - P\right\rVert$$
+    \end{enumerate}
+    
 
     \subsubsection*{Calculate PID}
     \begin{itemize}
