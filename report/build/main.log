@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.10.2)  3 DEC 2024 20:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.10.2)  3 DEC 2024 20:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -673,18 +673,20 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count318
 \l__pdf_internal_box=\box69
 )
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\main.aux
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\title.aux)
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\introduction.
-aux)
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\project_summa
-ry.aux)
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\theoretical_b
-asis.aux)
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\methodology.a
-ux)
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\reference.aux
-))
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\main.aux
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\title.aux)
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\introduction.aux)
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\project_summary.aux)
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\theoretical_basis.aux)
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\methodology.aux)
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\reference.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
@@ -706,13 +708,15 @@ LaTeX Font Info:    ... okay on input line 4.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 4.
 LaTeX Font Info:    ... okay on input line 4.
 Package hyperref Info: Link coloring ON on input line 4.
- (D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\main.out)
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\main.out)
+
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\main.out)
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
-
-(D:\Software\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+ (D:\Software\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count319
 \scratchdimen=\dimen281
@@ -783,7 +787,8 @@ Package pdftex.def Info: img/hcmut_logo.png  used on input line 23.
 
 {C:/Users/Admin/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./img/hcmut_
 logo.png>]
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\main.toc)
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\main.toc)
 \tf@toc=\write5
 \openout5 = `main.toc'.
 
@@ -794,12 +799,12 @@ been already used, duplicate ignored
                    \relax 
 l.52 \newpage
               [1]
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\main.lof)
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\main.lof)
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
-)
-[2]
+) [2]
 \openout2 = `introduction.aux'.
 
  (introduction.tex
@@ -827,8 +832,7 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10.95> not available
  <./img/tesla_cybertruck.jpg> <./img/vinfast.jpg>]
 \openout2 = `project_summary.aux'.
 
-
-(project_summary.tex)
+ (project_summary.tex)
 File: img/hcmut_logo.png Graphic file (type png)
 <use img/hcmut_logo.png>
 Package pdftex.def Info: img/hcmut_logo.png  used on input line 8.
@@ -1063,18 +1067,21 @@ Package pdftex.def Info: img/hcmut_logo.png  used on input line 10.
 
 (reference.tex) 
 enddocument/afterlastpage: lastpage setting LastPage.
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\main.aux
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\title.aux)
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\introduction.
-aux)
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\project_summa
-ry.aux)
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\theoretical_b
-asis.aux)
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\methodology.a
-ux)
-(D:\OneDrive_MSFT\University\projects\calculus1\main_report\build\reference.aux
-))
+
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\main.aux
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\title.aux)
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\introduction.aux)
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\project_summary.aux)
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\theoretical_basis.aux)
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\methodology.aux)
+(D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLANNING-ALGORITHM\r
+eport\build\reference.aux))
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
@@ -1083,8 +1090,8 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 8B3BE318CFBB1FF4F9B0E957A3B9C3FF;4838.
  ) 
 Here is how much of TeX's memory you used:
- 23418 strings out of 474485
- 443632 string characters out of 5755928
+ 23423 strings out of 474485
+ 444887 string characters out of 5755928
  1937542 words of memory out of 5000000
  45207 multiletter control sequences out of 15000+600000
  565220 words of font info for 61 fonts, out of 8000000 for 9000
@@ -1104,10 +1111,10 @@ e/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><D:/Software/MiKTeX/fonts/type
 /cm/cmsy6.pfb><D:/Software/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><D:/
 Software/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><D:/Software/MiKTeX/f
 onts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on D:\OneDrive_MSFT\University\projects\calculus1\main_report\bu
-ild\main.pdf (19 pages, 1707072 bytes).
+Output written on D:\OneDrive_MSFT\University\projects\calculus1\NOVEL-PATH-PLA
+NNING-ALGORITHM\report\build\main.pdf (19 pages, 1707844 bytes).
 PDF statistics:
- 465 PDF objects out of 1000 (max. 8388607)
- 85 named destinations out of 1000 (max. 500000)
+ 470 PDF objects out of 1000 (max. 8388607)
+ 90 named destinations out of 1000 (max. 500000)
  388 words of extra memory for PDF output out of 10000 (max. 10000000)
 
