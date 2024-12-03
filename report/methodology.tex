@@ -188,7 +188,29 @@ After that, the genes behind the crossover position of the 2 parental chromosome
     where $K$ is the point that we are trying to find projection of.
     \\
     Then we know for the fact that $B(t_{mid})$ is the closest point from K along the points in the Bezer resolution, the more optimal $t$ value that yields a more optimal solution must lies on the interval $\left[t_{mid}-\frac{1}{N_{bres}}; t_{mid}+\frac{1}{N_{bres}}\right]$.
+    \\
+    Let us define $t_{left} = t_{mid} - \frac{1}{N_{bres}}$ and $t_{right}=t_{mid}+\frac{1}{N_{bres}}$
+    The algorithm works by repeatedly do the following operations in order:
+    \begin{enumerate}
+      \item Calculating the distance between K and the two middle points of the intervals $[t_{left};t_{mid}]$ and $[t_{mid};t_{right}]$
+        \begin{center}
+          $d_1 = \left\lVert B\left(\frac{t_{left}+t_{mid}}{2}\rigth)-K \right\rVert$ and 
+          $d_2 = \left\lVert B\left(\frac{t_{mid}+t_{right}}{2}\rigth)-K \right\rVert$ 
+        \end{center}
+      \item Compare $d_1$ and $d_2$ to detemine which interval does the answer lies in
+      \item Ignore the interval that doesn't have the answer then update the left and right boundaries by assigning new values to $t_{left}$ and $t_{right}$
+        \begin{itemize}
+          \item $t_{right} = t_{mid}$ and keep $t_{left}$ the same if $d_1<d_2$
+          \item $t_{left} = t_{mid}$ and keep $t_{right}$ the same if $d_1\neq d_2$
+        \end{center}
+      \item Update $t_{mid} = \frac{t_{left} + t_{right}}{2}$
+      \item Check termination condition and repeat step 1 if not satisfied.\\
+        The we define a Termination Threshold $T_{BS}$ if $t_{right}-t_{left} \leq T_{BS}$ then the algorithm will yield the result $B(t_{mid})$
+    \end{enumerate}
+    
+
     \subsubsection*{Calculate error}
+
     \subsubsection*{Calculate PID}
     \begin{itemize}
       \item \textbf{Propotional(P):} Adjusting the control output in proportion to the error magnitude.The larger the error, the stronger the corrective action.\\
