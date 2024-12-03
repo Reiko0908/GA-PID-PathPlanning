@@ -223,3 +223,18 @@ After that, the genes behind the crossover position of the 2 parental chromosome
         $$\omega_{\text{pid}} = K_P \cdot Y_{\text{err}} + K_I \cdot \int_{0}^{t} Y_{\text{err}} \, dt + K_D \cdot \frac{dY_{\text{err}}}{dt}$$
     \end{itemize}
     \subsubsection*{Update vehicle}
+    \begin{itemize}
+	    \item \textbf{Heading:} The heading vector, representing the vehicle's orientation, is rotated by an angle of ω plus a noise term to account for uncertainties or disturbances.\\
+        $$\begin{bmatrix}
+	        cos(\omega + \omega{\Omega}dt) & -sin(\omega + \omega{\Omega}dt) \\
+    	    sin(\omega + \omega{\Omega}dt) & cos(\omega + \omega{\Omega}dt)
+        \end{bmatrix}
+        \cdot \vec{u}(t)$$\\
+	    \item \textbf{Noise:} Introducing random disturbances into the vehicle's steering control by generating noise based on a normal distribution. This noise simulates the real-world unpredictability of vehicle dynamics and environmental effects.\\
+		    $$\omega_{\Omega}=\eta\cdot x$$
+	    \item \textbf{Position:} The vehicle's position is incremented in the direction of the updated heading vector, scaled by the vehicle's velocity and normalized by the frame rate. This step ensures the vehicle's movement is consistent with its velocity and the simulation's time resolution.\\
+		    $$X(t)=X_0+V_{car}\cdot\vec{u}(t)dt$$
+	    \item \textbf{Normalized heading:} After the heading is updated, it is normalized to maintain a consistent magnitude. This normalization ensures numerical stability and avoids issues caused by cumulative floating-point errors during repeated updates.\\
+		    $$\dfrac{\vec{u}(t)}{\left\lVert \vec{u}(t)\right\rVert}$$
+    \end{itemize}
+
