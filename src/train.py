@@ -59,14 +59,14 @@ if __name__ == "__main__":
     # # map.create_obstacles()
     # # map.save_terrain("../data/terrain.txt")
     map.load_terrain("../data/terrain.txt")
-    map.generate_danger_map()
-    map.plot_3d_terrain()
-    # map.save_danger_map("../data/danger_map.txt")
-    # map.load_danger_map("../data/danger_map.txt")
-    # model = Genetic_model()
-    # model.generate_initial_population() 
-    #
-    # plot_terrain(map)
+    # map.generate_danger_map()
+    # map.plot_3d_terrain()
+    # # map.save_danger_map("../data/danger_map.txt")
+    # # map.load_danger_map("../data/danger_map.txt")
+    # # model = Genetic_model()
+    # # model.generate_initial_population() 
+    # #
+    plot_terrain(map)
     #
     # best_fitness = 1.0
     # best_chromosome = None
@@ -85,4 +85,4 @@ if __name__ == "__main__":
     # plot_bezier(chromosome_to_bezier(model.best_chromosome))
     # # plt.plot(range(NUM_EPOCH), model.saved_data)
     # # plt.savefig("train_results.png")
-    # plt.show()
+    plt.show()
